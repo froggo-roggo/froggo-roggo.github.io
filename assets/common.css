@@ -146,6 +146,16 @@ a{
 		margin: 20px 0 20px 0;
 	}
 	
+	.textarea{
+		margin: 15px auto 30px auto;
+	}
+	
+	.textbox{
+		margin: 15px 20px 20px 20px;
+		color: #999;
+		min-height: 85%;
+	}
+	
 	.texttitle{
 		font-size: 30px;
 		padding: 20px 16px 16px 16px;
