@@ -224,13 +224,13 @@ a:hover{
 	background: darkred;
 }*/
 
-
+/*
 .indexbutton:focus{
-	/*outline: 10px white;*/
+	outline: 10px white;
 	border: 3px solid yellow;
-	/*background: darkred;*/
+	background: darkred;
 }
-
+*/
 
 .p1button{
 	border: none;
