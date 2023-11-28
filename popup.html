@@ -1,0 +1,121 @@
+<html>
+  <head>
+    <title>Popup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	<link rel="stylesheet" href="./des.css" type="text/css">
+    <!--link rel="shortcut icon" href="favicon.ico" type="image/x-icon"!-->
+    <!--link rel="icon" href="favicon.ico" type="image/x-icon"!-->
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script>
+  <script type = 'module'>
+	//import tinycolor from "https://esm.sh/tinycolor2";
+	
+	var cb = document.getElementById("colorblind");
+	var lv = document.getElementById("lowvision");
+	var og = document.getElementById("original");
+
+
+	function colorblind(){
+		if (cb.className == "top"){
+			document.body.setAttribute("style", "-webkit-filter:grayscale(100%); backdrop-filter:grayscale(100%); background: #C40");
+			document.querySelector(".topBar").setAttribute("style", "-webkit-filter: grayscale(100%);");
+			//document.querySelector(".coloredText1").setAttribute("style", "-webkit-filter: grayscale(100%);");
+			var sth = document.querySelector(".top-selected");
+			sth.className = "top";
+			cb.className = "top-selected";
+		}
+		else{
+			return;
+		}
+	}
+
+	$("#colorblind").click(colorblind);
+
+	function lowvision(){
+		if (lv.className == "top"){
+			document.body.setAttribute("style", "-webkit-filter: blur(3px) ;background: #C40");
+			//document.querySelector(".topBar").setAttribute("style", "-webkit-filter: grayscale(0%);");
+			//document.querySelector(".coloredText1").setAttribute("style", "-webkit-filter: grayscale(0%);");
+			var sth = document.querySelector(".top-selected");
+			sth.className = "top";
+			lv.className = "top-selected";
+		}
+		else{
+			return;
+		}
+	}
+
+	$("#lowvision").click(lowvision);
+
+	function original(){
+		if (og.className == "top"){
+			document.body.setAttribute("style", "-webkit-filter:blur(0px); background: #C40;");
+			//document.querySelector(".coloredText1").setAttribute("style", "-webkit-filter: grayscale(0%);");
+			var sth = document.querySelector(".top-selected");
+			sth.className = "top";
+			og.className = "top-selected";
+		}
+		else{
+			return;
+		}
+	}
+
+	$("#original").click(original);
+	
+	
+	//var btn = document.getElementById("clsbtn");
+	function btnclck(){
+		document.getElementById("popupWrapper").setAttribute("style", "display: none");
+		document.getElementById("popupBox").setAttribute("style", "display: none");
+	}
+
+	$("#clsbtn").click(btnclck);
+
+  </script>
+  <body style = "background: #CC4400;">
+    <div class = "topBar">
+	  <div class="top-selected" tabIndex="1" id = "original">Original Intend</div>
+	  <div class="top" tabIndex="2" id = "colorblind">Color Blind</div>
+	  <div class="top" tabIndex="3" id = "lowvision">Low Vision</div>
+	</div>
+	<div class = "imagewrapper" style="height: 360px;">
+		<div class = "loader">
+			<div class = "imagebox"><img src = "samples/damgom.gif" alt = "Wrong alternative text example"></div>
+			<img src = "samples/dd.gif" style="opacity: 50%;">
+			</div>
+	</div>
+	<div class = "coloredText2">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+		Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+		reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+		pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+		culpa qui officia deserunt mollit anim id est laborum. </br>
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+		Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+		reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+		pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+		culpa qui officia deserunt mollit anim id est laborum. </br>
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+		Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+		reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+		pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+		culpa qui officia deserunt mollit anim id est laborum. </br>
+	</div>
+	
+	<div class = "popUpWrapper" id = "popupWrapper">
+	</div>
+	<div class = "popUpBox" id = "popupBox">
+		<button class = "clsbtn" id = "clsbtn">close<br>button</button>
+		<div class = "imgarea">
+			<img src = "samples/ctd.jpg" style = "width: 100%; height: 100%">
+		</div>
+	</div>
+	
+  </body>
+</html>

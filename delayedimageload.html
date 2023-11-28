@@ -1,14 +1,16 @@
 <html>
   <head>
-    <title>Index</title>
+    <title>Image</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
 	<link rel="stylesheet" href="./des.css" type="text/css">
     <!--link rel="shortcut icon" href="favicon.ico" type="image/x-icon"!-->
     <!--link rel="icon" href="favicon.ico" type="image/x-icon"!-->
   </head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script>
-  <script type="module">
-	var cb = document.getElementById("colorblind");
+  <script type = 'module'>
+	//import tinycolor from "https://esm.sh/tinycolor2";
+	
+		var cb = document.getElementById("colorblind");
 	var lv = document.getElementById("lowvision");
 	var og = document.getElementById("original");
 
@@ -16,7 +18,7 @@
 	function colorblind(){
 		if (cb.className == "top"){
 			document.body.setAttribute("style", "-webkit-filter:grayscale(100%); backdrop-filter:grayscale(100%); background: #C40");
-			//document.querySelector(".topBar").setAttribute("style", "-webkit-filter: grayscale(100%);");
+			document.querySelector(".topBar").setAttribute("style", "-webkit-filter: grayscale(100%);");
 			//document.querySelector(".coloredText1").setAttribute("style", "-webkit-filter: grayscale(100%);");
 			var sth = document.querySelector(".top-selected");
 			sth.className = "top";
@@ -59,42 +61,42 @@
 	}
 
 	$("#original").click(original);
+	
   </script>
   <body style = "background: #CC4400;">
-    <div class = "topBar" style = "position: relative">
-	 <div class="top-selected" tabIndex="1" id = "original">Original Intend</div>
+    <div class = "topBar">
+	  <div class="top-selected" tabIndex="1" id = "original">Original Intend</div>
 	  <div class="top" tabIndex="2" id = "colorblind">Color Blind</div>
 	  <div class="top" tabIndex="3" id = "lowvision">Low Vision</div>
 	</div>
-	<div class = "coloredText1">PleaseDoNotAccess.io</div>
-	<div style = "width: 100%; height: auto;">
-		<div class = "whitext">
-			Hello? Welcome to <span style="color: #00FFFF; text-decoration: underline">PleaseDoNotAccess.io</span>. This project was created to enhance people's understanding
-			about web accessibility. We specifically aim to provide you with an opportunity to consider 
-			web accessibility from the perspective of visually impaired individuals.
-			</br>
-			</br>
-			Before you press the start button below to experience examples of severely compromised web 
-			accessibility, we'd like to explain a few helpful things.
-			</br>
-			</br> 1. By pressing the menu bar at the 
-			top, you can switch to views designed for individuals with different visual conditions, 
-			such as color blindness, red-green color blindness, and low vision. Pressing the front button 
-			will return you to the initial screen. We recommend choosing one of the options before starting 
-			the experience for a more realistic encounter.
-			</br>
-			</br> 2. Additionally, we encourage you to navigate through 
-			the pages using only the keyboard, such as the tab key and arrow keys, instead of using the mouse. 
-			This is to make the experience more similar to the actual conditions faced by visually impaired individuals.
-			</br>
-			</br>
-			Are you ready? Then let's press the start button!
-		</div>
+	<div class = "imagewrapper" style="height: 360px;">
+		<div class = "loader">
+			<div class = "imagebox"><img src = "damgom.gif" alt = "Wrong alternative text example"></div>
+			<img src = "dd.gif" style="opacity: 50%;">
+			</div>
 	</div>
-	<div style = "margin: 30 100 0 100;">
-		<div style = "width: 350px; height: auto; display: inline-block; margin: 0 0 30 0;">
-			<button onclick="location.href='problem_1.html'" class = "indexbutton"> Start </button>
-		<div>
+	<div class = "coloredText2">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+		Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+		reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+		pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+		culpa qui officia deserunt mollit anim id est laborum. </br>
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+		Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+		reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+		pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+		culpa qui officia deserunt mollit anim id est laborum. </br>
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+		Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+		reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+		pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+		culpa qui officia deserunt mollit anim id est laborum. </br>
 	</div>
   </body>
 </html>

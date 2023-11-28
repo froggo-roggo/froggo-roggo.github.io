@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>자기소개</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+    <link rel="shortcut icon" href="../assets/favicon.ico" type="image">
+    <link rel="icon" href="../assets/favicon.ico" type="image">
+    <link rel="stylesheet" href="../assets/common.css" type="text/css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap">
+  </head>
+  <style>
+  </style>
+  <body class="page">
+    <div class="topbar">
+	  <div class="top"><a href="../eng/selfintro.html">English</a></div>
+	  <div class="top-selected">한국어</div>
+	  <div class="top"><a href="../kor/index.html">메인으로</a></div>
+	</div>
+	<div class="textarea">
+	  <div class="textbox">
+	    <div class="texttitle">안녕하세요</div>
+		<hr style="border: solid 1px #bdcfb4; width: 70%">
+		<div class="textbody">
+		  <div class = "psp">
+			그림을 그리고 코드를 짭니다.<br>
+			<div class = "invis">
+		    복사하려 하는 겁니까
+		    </div>
+			애니메이션 보고 게임하는 것을 좋아합니다.<br>
+			<div class = "invis">
+		    으아아아아ㅏ아아 속쓰려
+		    </div>
+			파이썬, 자바, C++ 등을 다뤄본 경험이 있습니다.<br>
+			<div class = "invis">
+		    아무 텍스트나 넣고 이 글을 망쳐보려 합니다 2
+		    </div>
+			아직은 많이 공부하고 있습니다.<br>
+			<div class = "invis">
+		    내 글 퍼가지 마세욧
+		    </div>
+		  </div>
+		  <div class = "psp">
+			충분한 돈을 주시면 공부해서라도 뭐든 만들어옵니다.<br>
+			무언가가 반드시 그렇다고 장담하는 것을 경계하고 있습니다.<br>
+			다만 언제나 최선을 다할 것만큼은 약속드릴 수 있습니다.<br>
+		  </div>
+		  <div class = "psp">
+		    Pronoun: He / She / They / 암거나 걍 보이는대로 쓰세요<br>
+			좋아하는 것: 그래놀라, 애플파이<br>
+			덕질하는 것: 자작 캐릭터, 메이플 스토리, 파이널 판타지 시리즈<br>
+		  </div>
+		  <div class = "psp">
+		    마지막으로 하고 싶은 말: 으아아 사우지 마세요 사우면 안됩니다
+		  </div>
+		  <div class = "psp">
+			<a class="hltxt" href="mailto: alphy0m0@gmail.com" title="메일 보내기" style="font-weight: 500;">메일 보내기 (클릭)</a><br>
+			작동하지 않을 경우 (누르면 복사됩니다): <span id="emailarea" style="font-weight: 500; cursor: pointer;">alphy0m0@gmail.com</span> <br>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </body>
+  <script>
+    const emailadd = document.getElementById("emailarea");
+    document.getElementById("emailarea").onclick = () =>{
+		window.navigator.clipboard.writeText(emailadd.textContent).then(()=>{alert("Copied!");});
+	}
+  </script>
+</html>

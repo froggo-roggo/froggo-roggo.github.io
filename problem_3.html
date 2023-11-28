@@ -1,0 +1,209 @@
+<html>
+  <head>
+    <title>Problem 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	<link rel="stylesheet" href="./des.css" type="text/css">
+    <!--link rel="shortcut icon" href="favicon.ico" type="image/x-icon"!-->
+    <!--link rel="icon" href="favicon.ico" type="image/x-icon"!-->
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script>
+  <script type="module">
+	var cb = document.getElementById("colorblind");
+	var lv = document.getElementById("lowvision");
+	var og = document.getElementById("original");
+
+
+	function colorblind(){
+		if (cb.className == "top"){
+			document.body.setAttribute("style", "-webkit-filter:grayscale(100%); backdrop-filter:grayscale(100%); background: #C40");
+			document.querySelector(".topBar").setAttribute("style", "-webkit-filter: grayscale(100%);");
+			//document.querySelector(".coloredText1").setAttribute("style", "-webkit-filter: grayscale(100%);");
+			var sth = document.querySelector(".top-selected");
+			sth.className = "top";
+			cb.className = "top-selected";
+		}
+		else{
+			return;
+		}
+	}
+
+	$("#colorblind").click(colorblind);
+
+	function lowvision(){
+		if (lv.className == "top"){
+			document.body.setAttribute("style", "-webkit-filter: blur(3px) ;background: #C40");
+			//document.querySelector(".topBar").setAttribute("style", "-webkit-filter: grayscale(0%);");
+			//document.querySelector(".coloredText1").setAttribute("style", "-webkit-filter: grayscale(0%);");
+			var sth = document.querySelector(".top-selected");
+			sth.className = "top";
+			lv.className = "top-selected";
+		}
+		else{
+			return;
+		}
+	}
+
+	$("#lowvision").click(lowvision);
+
+	function original(){
+		if (og.className == "top"){
+			document.body.setAttribute("style", "-webkit-filter:blur(0px); background: #C40;");
+			//document.querySelector(".coloredText1").setAttribute("style", "-webkit-filter: grayscale(0%);");
+			var sth = document.querySelector(".top-selected");
+			sth.className = "top";
+			og.className = "top-selected";
+		}
+		else{
+			return;
+		}
+	}
+
+	$("#original").click(original);
+	
+	function jsMove(){
+		var baselink = "./anscheck/prob3ans"
+		var pc = document.getElementById('passcode').value;
+		if (pc){
+			window.alert("Answer Submitted. 404 Error means wrong answer.");
+			//window.open((baselink.concat(pc)).concat(".html"));
+			var link = (baselink.concat(pc)).concat(".html");
+			//window.location.replace(link);
+			window.location.href = link;
+		}
+		else {
+			window.alert("Please fill the form.");
+		}
+		
+		
+	}
+	
+	$("#sbtn").click(jsMove);
+	
+	//var btn = document.getElementById("clsbtn");
+	function btnclck(){
+		document.getElementById("popupWrapper").setAttribute("style", "display: none");
+		document.getElementById("popupBox").setAttribute("style", "display: none");
+	}
+
+	$("#clsbtn").click(btnclck);
+	
+  </script>
+  <body style = "background: #CC4400;">
+    <div class = "topBar" style = "position: relative">
+	<div class="top-selected" tabIndex="1" id = "original">Original Intend</div>
+	<div class="top" tabIndex="2" id = "colorblind">Color Blind</div>
+	<div class="top" tabIndex="3" id = "lowvision">Low Vision</div>
+	</div>
+	<h2 style = "font-size: 30px">Problem 3</h2>
+	<div style = "width: 100%; height: auto;">
+		
+		<div class = "coloredText5">
+			<div style = "width: 100%;">
+				<audio controls style="width=250px; margin-bottom: 30px"><source src="samples/Howdy.mp3" type="audio/mp3"></audio>
+				<div id = "title" class = "p3childpar">
+					<b>To answer the question below, please listen to the screen reader result above.</b>
+				</div>
+				<!--<h3>Challenges in Screen Reading</h3>-->
+				<div id = "mixed1" class = "p3childpar">
+					Screen readers vary in their ability to interpret and</br>
+					vocalize the CSS styling of a webpage. While some are </br>
+					adept at detecting and reading CSS, others </br>
+					predominantly rely only on the plain HTML structure. </br>
+					This diversity can pose challenges when screen readers</br>
+					prioritize content for users. It becomes crucial to</br>
+					establish a consistent and well-organized HTML</br> 
+					structure that aligns with the logical reading order </br>
+					from left to right and top to bottom, similar to the </br>
+					flow of content in a printed document.</br>
+				</div>
+				<!--<h3>Importance of Unstyled HTML</h3>-->
+				<div id = "mixed3" class = "p3childpar">
+					<!--<h3>Importance of HTML structures</h3>-->
+					To circumvent potential challenges related to the </br>
+					reading order, developers should adhere to best </br>
+					practices in structuring HTML content. Employing </br>
+					semantic HTML elements, such as headings (&lt;h1&gt;, </br>
+					&lt;h2&gt;, etc.), paragraphs (&lt;p&gt;), and lists</br>
+					(&lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;), contributes to </br>
+					a clear and well-defined document structure. These </br>
+					elements, when arranged logically, facilitate an </br>
+					intuitive reading experience for both screen readers </br>
+					that interpret CSS and those that primarily rely on </br>
+					unstyled HTML.</br>
+				</div>
+				
+				<div class = "popUpWrapper" id = "popupWrapper">
+				</div>
+				<div class = "popUpBox" id = "popupBox">
+					<button class = "clsbtn" id = "clsbtn"> <img src = "samples/xbutton.png" style = "height: 30%; width: 30%; opacity: 30%"> </button>
+					<div class = "imgarea">
+						<img src = "samples/courseEval.png" style = "width: 100%; height: 100%">
+						
+					</div>
+					<span style = "font-size: 15px;"></br></span>
+					<span style = "font-weight: 700; font-size: 25px; color: #000;">
+						Free Course Evaluation </br>
+						Click now!
+					</span>
+					<span style = "font-weight: 500; font-size: 15px; color: #000;">
+						</br>
+						</br>
+						&gt; <a href = "https://cais.kaist.ac.kr/evalFinalCourseEvaluation"> https://cais.kaist.ac.kr/evalFinalCourseEvaluation </a> &lt;
+					</span>
+				</div>
+				
+				<div id = "mixed4" class = "p3childpar">
+					<!--<h3>Importance of Webpage Testing</h3>-->
+					Moreover, it is imperative to test webpages across </br>
+					various screen readers to ensure a consistent and </br>
+					accessible user experience. By doing so, developers </br>
+					can identify and rectify any discrepancies in how </br>
+					different screen readers interpret CSS, ensuring </br>
+					that the intended reading order is maintained.</br>
+				</div>
+				
+				<div id = "mixed2" class = "p3childpar">
+					Understanding the nuances of how screen readers </br>
+					interpret CSS styling is paramount. Although some </br>
+					screen readers can extract meaning from CSS, </br>
+					ensuring a reliable and universally accessible </br>
+					experience necessitates an HTML structure that </br>
+					inherently conveys content hierarchy. This is </br>
+					particularly important for users who heavily </br>
+					rely on a plain HTML to get the information.
+				</div>
+				<!--<h3>Summary</h3>-->
+				<div id = "mixed5" class = "p3childpar">
+					In summary, while some screen readers excel in </br>
+					interpreting CSS styling, it is crucial to </br>
+					prioritize a robust and well-organized HTML </br>
+					structure. Aligning the HTML layout with the </br>
+					natural flow of content, akin to a printed </br>
+					document, enhances the accessibility of web </br>
+					content for users with diverse needs. Developers </br>
+					should continually refine and test their HTML </br>
+					structures to guarantee an inclusive digital </br>
+					experience across a spectrum of assistive </br>
+					technologies.</br>
+				</div>
+			</div>
+			<div class = "horizontalBar"></div>
+			<div>
+				Question: Which of the following is the right order of contents in the HTML document?</br>
+				Hint: Most screen reader reads HTML content with the order from left to right and top to bottom.</br>
+				<span>1. 1-3-4-2-5</span></br>
+				<span>2. 1-2-4-5-3</span></br>
+				<span>3. 3-1-2-4-5</span></br>
+				<span>4. 2-5-3-4-1</span></br>
+			</div>
+		</div>
+		
+	<div style = "margin-top: 30; padding-bottom: 30;">
+		<input id = 'passcode' type='text' required style = "margin-bottom: 20px"><br><br>
+		<button id = 'sbtn'>Submit</button>
+	</div>
+	
+	
+	
+  </body>
+</html>
