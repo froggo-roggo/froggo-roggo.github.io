@@ -78,6 +78,15 @@
 	}
 	
 	$("#sbtn").click(jsMove);
+	
+	function hint(){
+		var es = document.getElementsByClassName("coloredText3");
+		for(var e of es){
+			e.style.color = "white";
+		}
+	}
+	
+	$("#hint").click(hint);
   </script>
   <body style = "background: #CC4400;">
     <div class = "topBar" style = "position: relative">
@@ -85,7 +94,7 @@
 	<div class="top" tabIndex="2" id = "colorblind">Color Blind</div>
 	<div class="top" tabIndex="3" id = "lowvision">Low Vision</div>
 	</div>
-	<h2 style = "font-size: 30px">Problem 2</h2>
+	<div style = "font-size: 40px"><b>Problem 2</b></div>
 	<div style = "display: inline-block; width: 60%; height: auto;">
 		<div class = "coloredText3">
 			<p>
@@ -94,12 +103,12 @@
 			easy access not only for people with disabilities but also for the elderly and those without disabilities
 			</p>
  		</div>
-		<div class = "coloredText00">
+		<div class = "coloredText3" id = "p101">
 			<p>
 			To achieve web accessibility, there are several key principles:
 			</p>
 		</div>
-		<div class = "coloredText01">
+		<div class = "coloredText3" id = "p102">
 			<p>
 			First, there should be alternative options for all content.
 			It means that, all contents should be substitutable with text or other forms are needed. 
@@ -107,14 +116,14 @@
 			audio content allows users with visual or auditory impairments to access information.
 			</p>
  		</div>
-		<div class = "coloredText02">
+		<div class = "coloredText3" id = "p103">
 			<p>
 			Second, user interface elements should be clear and predictable. Elements such as buttons 
 			or links should operate consistently and be designed to behave as users expect, enabling 
 			easy navigation and use of functions.
 			</p>
 			</div>
-		<div class = "coloredText04">
+		<div class = "coloredText3" id = "p104">
 			<p>
 			Third, the content should be provided clearly so that users can read, understand and utilize it effectively.
 			For instance, even if there is only text on the screen, the colors on the screen seen by people with color 
@@ -125,7 +134,7 @@
 			and the form of paragraphs</b> not only improves the page aesthetically but also increases the readability of the content.
 			</p>
  			</div>
-		<div class = "coloredText03">
+		<div class = "coloredText3" id = "p105">
 			<p>
 			These accessibility principles allow the web to be tailored to accommodate the 
 			diverse ways in which users access and interact with it.
@@ -166,10 +175,13 @@
 
 			</p>
 			<div class = "horizontalBar"></div>
-		<div class = "coloredText05">
+		<div class = "coloredText3" id = "p106">
 			<p>
 			Question: Which of the following is the most appropriate explanation for the term 'Web Accessibility"? </br>
-			(Hint: When it's too hard to read the text, use the "color blind" filter.) </br>
+			<span style = "color: #FFF">Hint: When it's too hard to read the text, press hint button below</br></span>
+			<div style = "margin-top: 10; padding-bottom: 10;">
+				<button id = 'hint'>Hint</button>
+			</div>
 			<span>1. Web accessibility aims to provide easy access only for people with disabilities. </span></br>
 			<span>2. The most important thing when placing elements such as buttons or links is to place them in an aesthetically pleasing manner. </span></br>
 			<span>3. Using appropriate color contrasts for easy differentiation, employing readable fonts, and increasing font sizes are all examples of efforts toward web accessibility. </span></br>
