@@ -281,15 +281,15 @@ a:hover{
 }
 
 .p3childpar#mixed2{
-	top: -51vw;
+	top: -55vw;
 }
 
 .p3childpar#mixed3{
-	top: 24vw;
+	top: 26vw;
 }
 
 .p3childpar#mixed4{
-	top: 24vw;
+	top: 26vw;
 }
 
 .p3childpar#mixed5{
@@ -325,7 +325,7 @@ button#sbtn{
 	}
 	
 	.p3childpar#mixed2{
-	top: -490px;
+	top: -530px;
 	}
 
 	.p3childpar#mixed3{
@@ -337,6 +337,6 @@ button#sbtn{
 	}
 
 	.p3childpar#mixed5{
-		top: 0px;
+		top: -40px;
 	}
 }
