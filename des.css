@@ -53,6 +53,48 @@ a:hover{
 	font-size: 15px;
 }
 
+.coloredText00{
+	margin: 50px 20% 50px 20%;
+	color: #C0CA33;
+	/*font-family: Vivaldi;*/
+	font-size: 15px;
+}
+
+.coloredText01{
+	margin: 50px 20% 50px 20%;
+	color: #FFB300;
+	/*font-family: Vivaldi;*/
+	font-size: 15px;
+}
+
+.coloredText02{
+	margin: 50px 20% 50px 20%;
+	color: #6D4C41;
+	/*font-family: Vivaldi;*/
+	font-size: 15px;
+}
+
+.coloredText03{
+	margin: 50px 20% 50px 20%;
+	color: #00695C;
+	/*font-family: Vivaldi;*/
+	font-size: 15px;
+}
+
+.coloredText04{
+	margin: 50px 20% 50px 20%;
+	color: #E57373;
+	/*font-family: Vivaldi;*/
+	font-size: 15px;
+}
+
+.coloredText05{
+	margin: 50px 20% 50px 20%;
+	color: #43A047;
+	/*font-family: Vivaldi;*/
+	font-size: 15px;
+}
+
 .sidebarArea{
 	float: left;
 	width: 17%;
