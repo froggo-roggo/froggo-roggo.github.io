@@ -10,34 +10,30 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script>
 <body>
-    <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-    <h1 class="display-4">Poll for the Worst Pattern</h1>
-    <p class="lead">Select the worst pattern that disrupts web accessibility you think</p>
-    <hr class="my-4">
-    <p>
-        Thank you for participating our PleaseDoNotAccess.io.
-    </p>
-    <p>
-        To find the worst pattern and share them, we made a simple poll.
-    </p>
-    <p>
-        The choices below are the patterns we used in PleaseDoNotAccess.io to disrupt web accessibility.
-    </p>
-    <p>
-		Please pick the worst pattern you think among them.
-    </p>
-	<details>
-		<summary>Result</summary>
-		To check the latest result, please reload the page. </br>
-		<iframe width="859" height="531" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSvIJj7mcxcmP92mCPFovt5SNBK1NeVXJt_-Gpl-0L8F-p7Gzvm-tnqGV-b5evX1lAtZuhUy_VWd_S4/pubchart?oid=415298223&amp;format=interactive"></iframe>
-	</details>
+    <div class="jumbotron jumbotron-fluid" style = "min-height: 450px;">
+		<div class="container">
+			<h1 class="display-4">Poll for the Worst Pattern</h1>
+			<p class="lead">Select the worst pattern that disrupts web accessibility you think</p>
+			<hr class="my-4">
+			<p>
+				Thank you for participating our PleaseDoNotAccess.io.
+			</p>
+			<p>
+				To find the worst pattern and share them, we made a simple poll.
+			</p>
+			<p>
+				The choices below are the patterns we used in PleaseDoNotAccess.io to disrupt web accessibility.
+			</p>
+			<p>
+				Please pick the worst pattern you think among them.
+			</p>
+			
+		</div>
+    </div>
 	
-    </div>
-    </div>
 
     <div class="container" id="form_container">
-        <form id="theForm" action="https://script.google.com/macros/s/AKfycbxSJli-6GMDsJCXIQ7FvnSS50mLwwZSr-5D4VgeT0TmgddFZltQv8xMbXW8xxmH9Yvv/exec" target = "__blank" method="GET" onsubmit="return preventRepeatedSubmission();">
+        <form id="theForm" action = "https://script.google.com/macros/s/AKfycbxSJli-6GMDsJCXIQ7FvnSS50mLwwZSr-5D4VgeT0TmgddFZltQv8xMbXW8xxmH9Yvv/exec" target = "_blank" name = "pollform" method="GET" onsubmit="return preventRepeatedSubmission();">
            
 			<div class="card form-group">
 				<div class="card-header">Our Dark Patterns</div>
@@ -89,13 +85,21 @@
 					</div>
 				</div>
 			</div>
-			
+			<input type="text" name="thank" value="Successfully Submitted. The result will be updated within 20 seconds." hidden>
             <input class="btn btn-info btn-lg" type="submit" value="Submit" id="submitBtn">
             <p class="text-muted">
                 <small>Please wait until submission is completed. This page will be automatically reloaded after 15 seconds.</small>
             </p>
         </form>
     </div>
+	
+	<div class="container">
+		<details>
+			<summary>If you want to check the <b>survey result</b>, click here. </summary>
+			To check the latest result, please reload the page. (It may take some time to reflect the latest information.)</br>
+			<iframe width = "859px" height = "531px" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSvIJj7mcxcmP92mCPFovt5SNBK1NeVXJt_-Gpl-0L8F-p7Gzvm-tnqGV-b5evX1lAtZuhUy_VWd_S4/pubchart?oid=415298223&amp;format=interactive"></iframe>
+		</details>
+	</div>
 
     <div class="container" style="padding-top: 60px;">
         <p class="text-center text-muted">&copy; PleaseDoNotAccess.io</p>
@@ -109,10 +113,21 @@
         };
 		
 		function jsReload(){
+			//goData();
 			setTimeout('location.reload()', 15000);
 		};
 		
 		$("#submitBtn").click(jsReload);
+		
+		/*
+		function goData(){
+			var form = document.pollform;
+			var newWin = window.open("about:blank", "winName").close();
+			form.action = "";
+			form.target = "winName";
+			form.submit();
+		}*/
+		
     </script>
 </body>
 
