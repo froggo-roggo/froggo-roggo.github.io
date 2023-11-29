@@ -31,7 +31,7 @@
     </div>
 
     <div class="container" id="form_container">
-        <form id="theForm" action="https://script.google.com/macros/s/AKfycbxr8315Zvn7DyHLMqlsAMSiELADtqLT3gNdPj_KsulYFDET36bVq8c2WZZ6lpf79HmS/exec" method="GET" onsubmit="return preventRepeatedSubmission();">
+        <form id="theForm" action="https://script.google.com/macros/s/AKfycbxSJli-6GMDsJCXIQ7FvnSS50mLwwZSr-5D4VgeT0TmgddFZltQv8xMbXW8xxmH9Yvv/exec" method="GET" onsubmit="return preventRepeatedSubmission();">
            
 			<div class="card form-group">
 				<div class="card-header">Our Dark Patterns</div>
@@ -85,7 +85,9 @@
 			</div>
 
             <input type="text" name="formid" value="1" hidden>
-            <input type="text" name="thank" value="Successfully Submitted. " hidden>
+            <!--<input type="text" name="thank" value="Successfully Submitted." hidden>-->
+            <input type="image" name="thank" value="Successfully Submitted." src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSvIJj7mcxcmP92mCPFovt5SNBK1NeVXJt_-Gpl-0L8F-p7Gzvm-tnqGV-b5evX1lAtZuhUy_VWd_S4/pubchart?oid=415298223&format=image" alt="Poll result" width="400" height="400" hidden>
+			
             <input class="btn btn-info btn-lg" type="submit" value="Submit" id="submitBtn">
             <p class="text-muted">
                 <small>Please wait during submission.</small>
