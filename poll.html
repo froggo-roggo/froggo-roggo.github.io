@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
         integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
 </head>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script>
 <body>
     <div class="jumbotron jumbotron-fluid">
     <div class="container">
@@ -27,11 +27,17 @@
     <p>
 		Please pick the worst pattern you think among them.
     </p>
+	<details>
+		<summary>Result</summary>
+		To check the latest result, please reload the page. </br>
+		<iframe width="859" height="531" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSvIJj7mcxcmP92mCPFovt5SNBK1NeVXJt_-Gpl-0L8F-p7Gzvm-tnqGV-b5evX1lAtZuhUy_VWd_S4/pubchart?oid=415298223&amp;format=interactive"></iframe>
+	</details>
+	
     </div>
     </div>
 
     <div class="container" id="form_container">
-        <form id="theForm" action="https://script.google.com/macros/s/AKfycbxSJli-6GMDsJCXIQ7FvnSS50mLwwZSr-5D4VgeT0TmgddFZltQv8xMbXW8xxmH9Yvv/exec" method="GET" onsubmit="return preventRepeatedSubmission();">
+        <form id="theForm" action="https://script.google.com/macros/s/AKfycbxSJli-6GMDsJCXIQ7FvnSS50mLwwZSr-5D4VgeT0TmgddFZltQv8xMbXW8xxmH9Yvv/exec" target = "__blank" method="GET" onsubmit="return preventRepeatedSubmission();">
            
 			<div class="card form-group">
 				<div class="card-header">Our Dark Patterns</div>
@@ -83,28 +89,30 @@
 					</div>
 				</div>
 			</div>
-
-            <input type="text" name="formid" value="1" hidden>
-            <!--<input type="text" name="thank" value="Successfully Submitted." hidden>-->
-            <input type="image" name="thank" value="Successfully Submitted." src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSvIJj7mcxcmP92mCPFovt5SNBK1NeVXJt_-Gpl-0L8F-p7Gzvm-tnqGV-b5evX1lAtZuhUy_VWd_S4/pubchart?oid=415298223&format=image" alt="Poll result" width="400" height="400" hidden>
 			
             <input class="btn btn-info btn-lg" type="submit" value="Submit" id="submitBtn">
             <p class="text-muted">
-                <small>Please wait during submission.</small>
+                <small>Please wait until submission is completed. This page will be automatically reloaded after 15 seconds.</small>
             </p>
         </form>
     </div>
 
     <div class="container" style="padding-top: 60px;">
-        <p class="text-center text-muted">&copy; DoNotAccess.io</p>
+        <p class="text-center text-muted">&copy; PleaseDoNotAccess.io</p>
     </div>
 
     <script type="text/javascript">
         function preventRepeatedSubmission() {
             document.getElementById('submitBtn').disabled = true;
             setTimeout("submitBtn.disabled=false;", 5000);
-            return true;
+			return true;
         };
+		
+		function jsReload(){
+			setTimeout('location.reload()', 15000);
+		};
+		
+		$("#submitBtn").click(jsReload);
     </script>
 </body>
 
