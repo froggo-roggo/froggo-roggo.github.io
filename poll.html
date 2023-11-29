@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Poll</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
+        integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+    <h1 class="display-4">Poll for the Worst Pattern</h1>
+    <p class="lead">Select the worst pattern that disrupts web accessibility you think</p>
+    <hr class="my-4">
+    <p>
+        Thank you for participating our PleaseDoNotAccess.io.
+    </p>
+    <p>
+        To find the worst pattern and share them, we made a simple poll.
+    </p>
+    <p>
+        The choices below are the patterns we used in PleaseDoNotAccess.io to disrupt web accessibility.
+    </p>
+    <p>
+		Please pick the worst pattern you think among them.
+    </p>
+    </div>
+    </div>
+
+    <div class="container" id="form_container">
+        <form id="theForm" action="https://script.google.com/macros/s/AKfycbwFroglrKFru9FJV4HttjIInpa_huPqQJHWVplFKPNR4TGGBlKxKRThNSMILnrYjfUI/exec" method="GET" onsubmit="return preventRepeatedSubmission();">
+           
+			<div class="card form-group">
+				<div class="card-header">Our Dark Patterns</div>
+				<div class="card-body">
+					<div class="form-check">
+						<!--<img src="poll_1.png" alt="Example of too small font size" width="800px"></br>-->
+						<input class="form-check-input" type="radio" name="q1" id="q1_1" value="1" required>
+						<label class="form-check-label" for="q1_1">1. Too small font size</label>
+					</div>
+					
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="q1" id="q1_2" value="2" required>
+						<label class="form-check-label" for="q1_2">2. Low text contrast</label>
+					</div>
+					
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="q1" id="q1_3" value="3" required>
+						<label class="form-check-label" for="q1_3">3. Keyboard accessibility (especially tab key)</label>
+					</div>
+					
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="q1" id="q1_4" value="4" required>
+						<label class="form-check-label" for="q1_4">4. Too many colors in one page</label>
+					</div>
+					
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="q1" id="q1_5" value="5" required>
+						<label class="form-check-label" for="q1_5">5. Missing or inaccurate alt text</label>
+					</div>
+					
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="q1" id="q1_6" value="6" required>
+						<label class="form-check-label" for="q1_6">6. Ambiguous link text</label>
+					</div>
+					
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="q1" id="q1_7" value="7" required>
+						<label class="form-check-label" for="q1_7">7. HTML layout without of order</label>
+					</div>
+					
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="q1" id="q1_8" value="8" required>
+						<label class="form-check-label" for="q1_8">8. Screen reader disruption by popup</label>
+					</div>
+					
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="q1" id="q1_9" value="9" required>
+						<label class="form-check-label" for="q1_9">9. Link hidden in an image</label>
+					</div>
+				</div>
+			</div>
+
+            <input type="text" name="formid" value="1" hidden>
+            <input type="text" name="thank" value="Part 1이 끝났습니다. 참여에 진심으로 감사드립니다!" hidden>
+            <input class="btn btn-info btn-lg" type="submit" value="Submit" id="submitBtn">
+            <p class="text-muted">
+                <small>Please wait during submission.</small>
+            </p>
+        </form>
+    </div>
+
+    <div class="container" style="padding-top: 60px;">
+        <p class="text-center text-muted">&copy; DoNotAccess.io</p>
+    </div>
+
+    <script type="text/javascript">
+        function preventRepeatedSubmission() {
+            document.getElementById('submitBtn').disabled = true;
+            setTimeout("submitBtn.disabled=false;", 5000);
+            return true;
+        };
+    </script>
+</body>
+
+</html>
