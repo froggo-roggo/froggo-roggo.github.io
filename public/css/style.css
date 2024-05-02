@@ -232,7 +232,7 @@ article h3,
 article h4,
 article h5,
 article h6 {
-	font-family: "Roboto", "Nanum Gothic";
+	font-family: 'Gelasio', 'Nanum Myeongjo', serif;
 	color: #333;
   	margin-bottom: 0;
 }

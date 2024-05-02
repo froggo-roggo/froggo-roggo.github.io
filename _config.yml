@@ -35,7 +35,7 @@ plugins:
   - jekyll-feed
 category_dir: category/
 tag_dir: tag/
-cover: assets/img/defaultcoverimage.png
+# cover: assets/img/defaultcoverimage.png
 
 # Exclude from processing.
 # The following items will not be processed, by default.

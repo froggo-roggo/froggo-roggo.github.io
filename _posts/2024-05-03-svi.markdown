@@ -1,0 +1,12 @@
+---
+layout: post
+title: Variational Inference
+date: 2024-05-03
+category: Probabilistic Modelling
+---
+
+# Variational inference (VI)란 무엇인가?
+
+[매우 잘 설명되어있는 글,,,](https://velog.io/@gibonki77/Inference-1)
+
+## 1. 
