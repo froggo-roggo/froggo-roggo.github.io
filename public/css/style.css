@@ -142,7 +142,7 @@ a.nav-item {
 	font-size: 100%;
 	font-family: "Noto Sans";
 	text-transform: capitalize;
-	color: #cbc3db;
+	color: #c3dbc6;
 }
 
 a.nav-item:hover { color: #faf6f0; }
@@ -157,7 +157,7 @@ a.nav-item:hover { color: #faf6f0; }
 .post-link {
 	margin-left: 10px;
 	font-size: 110%;
-	color: #aba3bb;
+	color: #a3bba3;
 }
 
 #contact-list li .fa,
