@@ -55,7 +55,7 @@ body {
 
 a {
 	text-decoration: none;
-	color: #aba3bb;
+	color: #93bf94;
 	background-color: transparent;
 }
 
@@ -98,7 +98,7 @@ code {
 	flex: 0 0 270px;
 	padding: 15px;
 	z-index: 1;
-	background-color: #563157;
+	background-color: #305c3b;
 	color: #fff;
 }
 
@@ -119,7 +119,7 @@ code {
 
 .lead {
 	font-size: 120%;
-	color: #cbc3db;
+	color: #c3dbc6;
 }
 
 .sidebar-header {
@@ -145,7 +145,7 @@ a.nav-item {
 	color: #c3dbc6;
 }
 
-a.nav-item:hover { color: #faf6f0; }
+a.nav-item:hover { color: #f2faf0; }
 
 .badge { font-size: 70%; }
 .badge::before { content: "("; }
