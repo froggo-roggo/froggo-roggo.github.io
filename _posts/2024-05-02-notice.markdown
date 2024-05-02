@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 
+title: Notice
 date: 2024-05-02
-category: Notice
+category: Amumal
 ---
 
 와하학
