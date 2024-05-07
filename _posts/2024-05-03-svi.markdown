@@ -15,14 +15,14 @@ use_math: true
 - 베이즈 정리는 "확률 변수의 사전 확률과 사후 확률 사이의 관계를 나타내는 정리"다. 이게 대체 무슨 말임?
   - 원인 사건 A1 ~ An 와 이에 따른 결과 사건 B가 주어져 있을 때, 만약 B가 발생했다면 그 원인이 사건 Ai일 확률을 의미한다.
   - 이를 수식으로 나타내면 다음과 같다.  
-    $$ P(A_i|B) = \frac{P(B|A_i) \times P(A_i)}{\sum\limits_{i=1}^n P(B|A_i) \times P(A_i)} $$
+    $$ P(A_i \mid B) = \frac{P(B \mid A_i) \times P(A_i)}{\sum\limits_{i=1}^n P(B \mid A_i) \times P(A_i)} $$
 	
-  - $$ \sum\limits_{i=1}^n P(B|A_i) \times P(A_i) $$ 는 어떤 경우엔 $$ P(B) $$ 로 요약할 수도 있다. 이는 말 그대로 사건이 일어날 전체 확률이다.
+  - $$ \sum\limits_{i=1}^n P(B \mid A_i) \times P(A_i) $$ 는 어떤 경우엔 $$ P(B) $$ 로 요약할 수도 있다. 이는 말 그대로 사건이 일어날 전체 확률이다.
   - $$ P(A_i) $$는 $$ P(B) $$가 발생하기 전부터 알고 있던 $$ A_i $$의 발생 확률이다.
-  - $$ P(B|A_i) $$는 사건 A_i가 발생했을 때 이에 따라 사건 B가 발생할 확률이다.
+  - $$ P(B \mid A_i) $$는 사건 A_i가 발생했을 때 이에 따라 사건 B가 발생할 확률이다.
 - 이 베이즈 정리와 데이터 추론은 대체 무슨 상관이 있을까?
   - 식을 약간 바꿔서, 원인 사건 A는 가설 h로 바꾸고 결과 사건 B는 데이터 D로 바꿔보자.
-    $$ P(h|D) = \frac{P(D|h) \times P(h)}{\sum\limits_{h' \in \mathbf{H}} P(D, h')}$$
+    $$ P(h \mid D) = \frac{P(D \mid h) \times P(h)}{\sum\limits_{h' \in \mathbf{H}} P(D, h')}$$
   - P(h)는 **사전확률 (prior)** 이다. 데이터를 관측하기 전 가지고 있던 가설을 의미한다.
   - P(D\|h)는 **가능도 (likelihood)** 이다. 가설 h에 따라서 D가 발생할 확률이다.
   - p(h\|D)는 **사후확률 (posterior)** 이다. 데이터 D가 관측되었을 때 그 원리, 또는 데이터의 기저에 있는 추상화된 관계가 가설 h에 기반할 확률이다.
@@ -32,9 +32,9 @@ use_math: true
 	- 또는, x = (t-1)(t-2)(t-3) + 2t 라는 결과를 내놓을 수도 있다. (이는 일반적으로 데이터에 과적정된 추론이라고도 볼 수 있을 것이다.)
     - 답이 어느 쪽이든, 여기서 데이터 D는 주어진 t, x의 집합이고, 가설 h는 (상식적인 사전 지식 선에서 떠올릴 수 있는) 모든 t와 x 사이의 관계식이다.
   - 그리고 베이즈 정리에 따른 *가장 그럴듯한 답*은 사후확률이 가장 큰 h, 즉 P(h\|D)를 최대화하는 h이다.
-    - 따라서 베이즈 추론은 이런 h ($$ = \underset{h}{\mathrm{argmax}} \ P(h|D) $$)를 구하는 과정이라고도 볼 수 있다.
+    - 따라서 베이즈 추론은 이런 h ($$ = \underset{h}{\mathrm{argmax}} \ P(h \mid D) $$)를 구하는 과정이라고도 볼 수 있다.
 - 이때 $$ \sum\limits_{h' \in \mathbf{H}} P(D, h') $$는 처음부터 가설 공간에 대해 정해져 있는 값이다.
-  - 따라서 $$ \underset{h}{\mathrm{argmax}} \ P(h|D) $$를 구하는 과정은 자연스럽게 $$ \underset{h}{\mathrm{argmax}} \ P(D|h) \times P(h) $$를 구하는 과정이 된다.
+  - 따라서 $$ \underset{h}{\mathrm{argmax}} \ P(h \mid D) $$를 구하는 과정은 자연스럽게 $$ \underset{h}{\mathrm{argmax}} \ P(D \mid h) \times P(h) $$를 구하는 과정이 된다.
   - 이러한 추론을 **최대사후확률추정 (Maximum A Posteriori, MAP)** 라고 한다.
 
 ## 2. 최대가능도추정 (MLE)
