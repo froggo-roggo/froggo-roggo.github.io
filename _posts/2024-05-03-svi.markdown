@@ -56,7 +56,7 @@ $$ P(h \mid D) = \frac{P(D \mid h) \times P(h)}{\sum\limits_{h' \in \mathbf{H}} 
     - 예를 들어 평균 $$ \mu $$와 표준편차 $$ \sigma $$를 모르는 정규분포를 그 추출값으로부터 복원하고자 할 때, 우리가 구해야 할 parameter는 $$ \theta = (\mu, \sigma) $$ 가 된다.
 - 이때 뭔진 모르겠지만 sample 및 parameter에 대한 가능도(likelihood)를 최대화함으로써 parameter를 복원하기 때문에 MLE라고 부른다.
 
-### 가능도는 그러면 어떻게 구하는가?
+### 그러면 가능도는 대체 뭔가? 이걸 어떻게 구하는가?
 - 가능도 $$ L(\theta ; x) $$은 sample x가 이미 정해진 값일 때 parameter θ에 따라 달라지는 함수다.
 	- 이때 식 자체는 원래 parameter에 따른 확률밀도함수인 $$ p(x ; \theta) $$와 같다. 그저 무엇이 상수이고 무엇이 변수인지가 달라졌을 뿐이다.
 - 이게 무슨 말이냐면...
@@ -70,5 +70,12 @@ $$ P(h \mid D) = \frac{P(D \mid h) \times P(h)}{\sum\limits_{h' \in \mathbf{H}} 
 	$$ L(\mu, \sigma ; x) = \frac{1}{\sqrt{2 \pi \sigma^2}}exp(-\frac{(x - \mu)^2}{2\sigma^2}) $$
 	
 	- 만약 parameter $$ \mu, \sigma $$를 제대로 찾았다면, $$ L(\mu, \sigma) $$는 커진다. 그래서 이것을 가능도(likelihood)라고 부른다. 이거 가능해보임? ㅇㅇ ㄱㄴ
+- 일반적으로 표본은 여러개이다. 따라서 표본 x1~xn에 대해 가능도 함수는 다음과 같다.
+
+$$L(\theta \mid x_1, x_2, ... , x_n) = \underset{i=1}{\overset{n}{\prod}}p(x^{i};\theta)$$
+
+- 즉 최대가능도추정은 위 가능도 L에 대해 다음 $$ \theta_{MLE} $$를 찾고자 하는 과정이다.
+
+$$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ... , x_n) = \underset{\theta}{\mathrm{argmax}}\underset{i=1}{\overset{n}{\prod}}p(x^{i};\theta)$$
 
 ## 3. MLE와 MAP
