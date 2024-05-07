@@ -2,7 +2,7 @@
 layout: post
 title: Variational Inference
 date: 2024-05-03
-category: Probabilistic Modelling
+category: Probabilistic-Modelling
 use_math: true
 ---
 
