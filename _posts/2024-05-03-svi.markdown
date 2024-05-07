@@ -82,6 +82,7 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
 
 ## 3. MLE와 MAP
 - MLE와 MAP의 차이를 요약하면 다음과 같다.
+
     |항목| MLE | MAP |
     |:---:|:---:|:---:|
     |최대화하려는 것| $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}}\underset{i=1}{\overset{n}{\prod}}p(x^{i};\theta)$$ |  $$\hat{h}_{MAP} = \underset{h}{\mathrm{argmax}} \ (log (P(D \mid h)) + log (P(h)))$$ |
@@ -95,7 +96,7 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
 	
 - 이때, $$\hat{h}_{MAP}$$는 data의 크기에 의존하며, 사전확률 p(h)는 균등하다.
     - 이는 데이터가 클수록 p(h)는 상대적으로 덜 신경을 써도 된다는 말이기도 한데, 전문용어로는 "데이터가 사전확률을 압도"한다고 표현한다.
-    - 그리고 데이터가 많을수록, $$\hat{h}_{MAP}$$는 $$\hat{h}_{MLE} = \underset{\theta}{\mathrm{argmax}} log(p(D|h))$$에 수렴하게 된다.
+    - 그리고 데이터가 많을수록, $$\hat{h}_{MAP}$$는 $$\hat{h}_{MLE} = \underset{\theta}{\mathrm{argmax}} log(p(D \mid h))$$에 수렴하게 된다.
 
 ## 4. MAP를 통한 학습
 - 학습은 최대 사후 확률을 구하는 것에서 끝나지 않는다.
