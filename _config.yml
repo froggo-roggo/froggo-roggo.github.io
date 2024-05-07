@@ -24,7 +24,14 @@ description: Hell-o!!!!!!!!!!!!!!!!!!!!!!!
 # baseurl: "/" 
 # url: "https://froggo-roggo.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: froggo-roggo
+
+
+markdown: kramdown
 highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
 svg:
   optimize: true
 # Build settings
