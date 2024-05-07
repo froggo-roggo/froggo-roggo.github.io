@@ -15,8 +15,9 @@ use_math: true
 - 베이즈 정리는 "확률 변수의 사전 확률과 사후 확률 사이의 관계를 나타내는 정리"다. 이게 대체 무슨 말임?
   - 원인 사건 A1 ~ An 와 이에 따른 결과 사건 B가 주어져 있을 때, 만약 B가 발생했다면 그 원인이 사건 Ai일 확률을 의미한다.
   - 이를 수식으로 나타내면 다음과 같다.  
-    $$ P(A_i|B) = \frac{P(B|A_i) \times P(A_i)}{\sum\limits_{i=1}^n P(B|A_i) \times P(A_i)}$$
-  - $$ \sum\limits_{i=1}^n P(B|A_i) \times P(A_i) $$는 어떤 경우엔 $$ P(B) $$로 요약할 수도 있다. 이는 말 그대로 사건이 일어날 전체 확률이다.
+    $$ P(A_i|B) = \frac{P(B|A_i) \times P(A_i)}{\sum\limits_{i=1}^n P(B|A_i) \times P(A_i)} $$
+	
+  - $$ \sum\limits_{i=1}^n P(B|A_i) \times P(A_i) $$ 는 어떤 경우엔 $$ P(B) $$ 로 요약할 수도 있다. 이는 말 그대로 사건이 일어날 전체 확률이다.
   - $$ P(A_i) $$는 $$ P(B) $$가 발생하기 전부터 알고 있던 $$ A_i $$의 발생 확률이다.
   - $$ P(B|A_i) $$는 사건 A_i가 발생했을 때 이에 따라 사건 B가 발생할 확률이다.
 - 이 베이즈 정리와 데이터 추론은 대체 무슨 상관이 있을까?
@@ -35,6 +36,7 @@ use_math: true
 - 이때 $$ \sum\limits_{h' \in \mathbf{H}} P(D, h') $$는 처음부터 가설 공간에 대해 정해져 있는 값이다.
   - 따라서 $$ \underset{h}{\mathrm{argmax}} \ P(h|D) $$를 구하는 과정은 자연스럽게 $$ \underset{h}{\mathrm{argmax}} \ P(D|h) \times P(h) $$를 구하는 과정이 된다.
   - 이러한 추론을 **최대사후확률추정 (Maximum A Posteriori, MAP)** 라고 한다.
+
 ## 2. 최대가능도추정 (MLE)
 - 한편 MAP와 자주 비교되는 MLE란 무엇인가?
   - 이것 역시 학부 확률과통계, 기초확률론 등 필수 이수과목에서 분명 2번이나 가르쳤던 것 같은데 또 까먹었다.
