@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Variational Inference
+title: MLE, MAP와 Variational Inference
 date: 2024-05-03
 category: Probabilistic-Modelling
 use_math: true
@@ -17,31 +17,33 @@ use_math: true
 - **원인 사건 A1 ~ An 와 이에 따른 결과 사건 B가 주어져 있을 때, 만약 B가 발생했다면 그 원인이 사건 Ai일 확률**을 의미한다.
 - 이를 수식으로 나타내면 다음과 같다.  
 
-$$ P(A_i \mid B) = \frac{P(B \mid A_i) \times P(A_i)}{\sum\limits_{i=1}^n P(B \mid A_i) \times P(A_i)} $$
+$$ p(A_i \mid B) = \frac{p(B \mid A_i) \times p(A_i)}{\sum\limits_{i=1}^n p(B \mid A_i) \times p(A_i)} $$
 
-- $$ \sum\limits_{i=1}^n P(B \mid A_i) \times P(A_i) $$ 는 어떤 경우엔 $$ P(B) $$ 로 요약할 수도 있다. 이는 말 그대로 사건이 일어날 전체 확률이다.
-- $$ P(A_i) $$는 $$ P(B) $$가 발생하기 전부터 알고 있던 $$ A_i $$의 발생 확률이다.
-- $$ P(B \mid A_i) $$는 사건 A_i가 발생했을 때 이에 따라 사건 B가 발생할 확률이다.
+- $$ \sum\limits_{i=1}^n p(B \mid A_i) \times p(A_i) $$ 는 어떤 경우엔 $$ p(B) $$ 로 요약할 수도 있다. 이는 말 그대로 사건이 일어날 전체 확률이다.
+- $$ p(A_i) $$는 $$ p(B) $$가 발생하기 전부터 알고 있던 $$ A_i $$의 발생 확률이다.
+- $$ p(B \mid A_i) $$는 사건 A_i가 발생했을 때 이에 따라 사건 B가 발생할 확률이다.
 
 ### 1.2. 이 베이즈 정리와 데이터 추론은 대체 무슨 상관이 있을까?
 - 식을 약간 바꿔서, 원인 사건 A는 가설 h로 바꾸고 결과 사건 B는 데이터 D로 바꿔보자.
 
-$$ P(h \mid D) = \frac{P(D \mid h) \times P(h)}{\sum\limits_{h' \in \mathbf{H}} P(D, h')}$$
+$$ p(h \mid D) = \frac{p(D \mid h) \times p(h)}{\sum\limits_{h' \in \mathbf{H}} p(D, h')}$$
 
-- P(h)는 **사전확률 (prior)** 이다. 데이터를 관측하기 전 가지고 있던 가설을 의미한다.
-- P(D\|h)는 **가능도 (likelihood)** 이다. 가설 h에 따라서 D가 발생할 확률이다.
+- p(h)는 **사전확률 (prior)** 이다. 데이터를 관측하기 전 가지고 있던 가설을 의미한다.
+- p(D\|h)는 **가능도 (likelihood)** 이다. 가설 h에 따라서 D가 발생할 확률이다.
 - p(h\|D)는 **사후확률 (posterior)** 이다. 데이터 D가 관측되었을 때 그 원리, 또는 데이터의 기저에 있는 추상화된 관계가 가설 h에 기반할 확률이다.
-- 마지막으로 $$ \sum\limits_{h' \in \mathbf{H}} P(D, h') $$ 는  **증거(evidence) 또는 Marginal likelihood**라고 부른다.
+- 마지막으로 $$ \sum\limits_{h' \in \mathbf{H}} p(D, h') $$ 는  **증거(evidence) 또는 marginal likelihood**라고 부른다.
 - 즉, 베이지언 데이터 추론은 **이미 D를 관측했을 때, 우리의 사전 지식에 기반하여 그 D의 원인이 되는 h를 추론하는 과정**이다.
     - 예를 들면, 시간 t = \[1, 2, 3\]에 따른 데이터 x = \[2, 4, 6\]이 주어졌다면 기초적인 수학 지식에 기반해 관계를 x = 2t 라고 유추해볼 수 있다.
 	- 또는, x = (t-1)(t-2)(t-3) + 2t 라는 결과를 내놓을 수도 있다. (이는 일반적으로 데이터에 과적정된 추론이라고도 볼 수 있을 것이다.)
     - 답이 어느 쪽이든, 여기서 데이터 D는 주어진 t, x의 집합이고, 가설 h는 (상식적인 사전 지식 선에서 떠올릴 수 있는) 모든 t와 x 사이의 관계식이다.
-- 그리고 베이즈 정리에 따른 *가장 그럴듯한 답*은 사후확률이 가장 큰 h, 즉 P(h\|D)를 최대화하는 h이다.
-    - 따라서 베이즈 추론은 이런 h ($$ = \underset{h}{\mathrm{argmax}} \ P(h \mid D) $$)를 구하는 과정이라고도 볼 수 있다.
+- 그리고 베이즈 정리에 따른 *가장 그럴듯한 답*은 사후확률이 가장 큰 h, 즉 p(h\|D)를 최대화하는 h이다.
+    - 따라서 베이즈 추론은 이런 h ($$ = \underset{h}{\mathrm{argmax}} \ p(h \mid D) $$)를 구하는 과정이라고도 볼 수 있다.
+	- $$\underset{h}{\mathrm{argmax}} \ p(h \mid D) $$ 최대 사후 확률 (posterior mode)라고 하며, 사후 확률 분포의 최빈값을 가리킨다.
 
-### 1.3. 이때 $$ \sum\limits_{h' \in \mathbf{H}} P(D, h') $$는 처음부터 가설 공간에 대해 정해져 있는 값이다.
-- 따라서 $$ \underset{h}{\mathrm{argmax}} \ P(h \mid D) $$를 구하는 과정은 자연스럽게 $$ \underset{h}{\mathrm{argmax}} \ P(D \mid h) \times P(h) $$를 구하는 과정이 된다.
+### 1.3. 이때 위 식의 분모 $$ \sum\limits_{h' \in \mathbf{H}} p(D, h') $$는 처음부터 가설 공간에 대해 정해져 있는 값이다.
+- 따라서 $$ \underset{h}{\mathrm{argmax}} \ p(h \mid D) $$를 구하는 과정은 자연스럽게 $$ \underset{h}{\mathrm{argmax}} \ p(D \mid h) \times p(h) $$를 구하는 과정이 된다.
 - 이러한 추론을 **최대사후확률추정 (Maximum A Posteriori, MAP)** 라고 한다.
+
 
 
 
@@ -83,29 +85,101 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
 ## 3. MLE와 MAP
 - MLE와 MAP의 차이를 요약하면 다음과 같다.
 
+	<div style = "overflow-x: auto;">
     |항목| MLE | MAP |
     |:---:|:---:|:---:|
-    |최대화하려는 것| $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}}\underset{i=1}{\overset{n}{\prod}}p(x^{i};\theta)$$ |  $$\hat{h}_{MAP} = \underset{h}{\mathrm{argmax}} \ (log (P(D \mid h)) + log (P(h)))$$ |
+    |최대화하려는 것| $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}}\underset{i=1}{\overset{n}{\prod}}p(x^{i};\theta)$$ |  $$\hat{h}_{MAP} = \underset{h}{\mathrm{argmax}} \ (log (p(D \mid h)) + log (p(h)))$$ |
     |사전 지식| X | O |
-	
+	</div>
 	- 갑자기 log 씌워짐 주의: 어차피 찾는 것이 argmax이기도 하고, 하술할 이유로 log를 씌워서 계산하는 편이 생각하기 더 편하기 때문에 씌웠다. (일반적으로 곱셈을 계산할 때 지수함수 or 로그를 쓰면 편하다.)
 
-- 위에서도 확인했듯 MLE는 사전지식을 사용하지 않지만 MAP는 사용한다. 이것은 왜 중요한가?
+- 위에서도 확인했듯 MLE는 사전지식을 사용하지 않지만 MAP는 사용한다. (p(h)의 유무 참조) 이것은 왜 중요한가?
     - 쉽게 말해 "어떤 가설은 다른 가설보다 훨씬 더 그럴듯하다는 배경 지식을 반영함으로써 최적화를 최적화한다"고 생각하면 될 것 같다.
-    - 배경 지식의 반영을 수식으로 정량화했다는 점이 가장 큰 의의라고 보면 된다.
+		- 배경 지식의 반영을 수식으로 정량화했다는 점이 가장 큰 의의라고 보면 된다.
+	- MAP가 가장 유용한 상황은 바로 "데이터가 사전 확률을 압도하지 못할 때", 즉 관측된 데이터의 수가 비교적 적을 때이다.
+		- 예를 들어 "동전을 던졌을 때 앞면이 나올 것인지 예측하는 임무"에서...
+			- 가장 첫 번째 시행에서 관측된 데이터는 0이기 때문에 MLE로는 확률을 추정할 수가 없다.
+			- 하지만 MAP에서는 "동전에 앞면, 뒷면이 있을 것이므로 확률은 반반"이라는 사전 정보가 $$ p(h) = \frac{0+1}{0+2} = \frac{1}{2} $$ 의 형태로 반영이 되어 있다.
+		- 이런 문제 상황을 **zero count problem**, 또는 **sparse data problem**이라고 부른다. (검은 백조의 역설)
 	
 - 이때, $$\hat{h}_{MAP}$$는 data의 크기에 의존하며, 사전확률 p(h)는 균등하다.
     - 이는 데이터가 클수록 p(h)는 상대적으로 덜 신경을 써도 된다는 말이기도 한데, 전문용어로는 "데이터가 사전확률을 압도"한다고 표현한다.
-    - 그리고 데이터가 많을수록, $$\hat{h}_{MAP}$$는 $$\hat{h}_{MLE} = \underset{\theta}{\mathrm{argmax}} log(p(D \mid h))$$에 수렴하게 된다.
+    - 그리고 데이터가 많을수록, $$\hat{h}_{MAP}$$는 $$\hat{h}_{MLE} = \underset{\theta}{\mathrm{argmax}} \ log(p(D \mid h))$$에 수렴하게 된다.
 
 ## 4. MAP를 통한 학습
 - 학습은 최대 사후 확률을 구하는 것에서 끝나지 않는다.
-    - 사후 확률에 따라 구한 h가 진짜 D를 설명하는지 검증하는 절차가 필요하다. 어떻게?
+    - 사후 확률에 따라 구한 h가 진짜 D를 설명하는지 검증해야 한다. 어떻게?
 	- 가설과 사전 지식을 최대한 잘 잡았음에도 불구하고 진짜 답은 여기에 포함되지 않을 수가 있다. 그러면 어떻게 하지?
 
 ### 4.1. 사후 예측 분포
 >  "사후 확률은 세상에 대한 우리의 내부적인 신뢰 상태를 표현한다." (케빈 머피 책에 있는 말임)
 
 - 무슨 뜻이지? 결국 사후 확률도 사전 확률에 근거한 '믿음'이라는 것이다.
-    - 이 믿음이 정말 믿음직한지는 어떻게 테스트할 것인가? 한 가지 방법은 사후 확률을 sampling해서 얻을 수 있는 새로운 data를 예측해보는 것이다.
+    - 이 믿음이 정말 믿음직한지는 어떻게 테스트할 것인가? 한 가지 방법은 <u>사후 확률을 sampling해서 얻을 수 있는 새로운 data</u>를 예측해보는 것이다.
     - 이를 **사후 예측 분포 (posterior predictive distribution)** 라고 한다.
+		- 이것이 marginal likelihood를 최대화한다면, 거꾸로 h(= z(θ))가 D를 잘 설명한다고 볼 수 있다.
+	- 일반적으로 사후 예측 확률은 다음과 같이 주어진다.
+	
+	$$ p(\tilde{x} \in C \mid D) = \sum\limits_{h} p(\tilde{x} \in C \mid h) \ p(h \mid D) $$ (이산 분포)
+
+	$$ p_{\theta}(\tilde{x} \mid D) = \int p_{\theta}(\tilde{x} \mid z) \ p_{\theta}(z \mid D) dz $$ (연속 분포, h = z(θ)라는 모델로 둠)
+		
+		- 이때 marginal likelihood를 최대화하는 z의 parameter θ: $$ \theta_{max} =  \underset{\theta}{\mathrm{argmax}} \ \int p_{\theta}(z \mid D) dz $$
+		- 이부분이제일헷갈림솔직히문자가다제멋대로라서누가삼국통일좀해줬으면좋겠음
+	
+	- 만약 데이터가 커질 경우, 사후 확률은 델타 함수로 수렴한다. 이 경우 예측 분포는 다음과 같다.
+	
+	$$ p(\tilde{x} \in C \mid D) = p(\tilde{x} \mid \hat{h}) $$
+
+
+### 4.2. 켤레 사전 확률 분포 (Conjugate prior distribution)
+- 거칠게 요약하면 결국 (사후확률 posterior) = (사전확률 prior) \* (가능도 likelihood) / (marginal likelihood) 이다.
+	- 이때, 실제 상황에서 확률 분포와 확률 분포의 곱셈은 생각보다 쉽지 않을 수 있다. (복잡한 적분이 동반되기 때문)
+	- 만약 이런 상황에서 prior와 posterior가 같은 형태라면 어떨까? posterior의 계산이 훨씬 더 쉬울 것이다.
+	- 이러한 prior를 **켤레 사전 확률 분포 (Conjugate prior distribution)**이라고 부른다. 말 그대로 짝이 되기 때문이다.
+- post = pri \* like이니까, 결국 어떤 것이 conjugate prior가 되는지는 가능도에 따라 달라진다.
+	- 다음 표는 사후 확률 분포를 사전 확률 분포와 같은 종류에 속하도록 만드는 가능도-사전 확률 분포의 쌍이다.
+
+	<div style = "overflow-x: auto;">
+    | Observation or Likelihood | Prior |
+    |:---:|:---:|
+    | Poisson | Gamma |
+    | Bernoulli | Beta |
+	| Binomial | Beta |
+	| Normal | Normal |
+	| Exponential | Gamma |
+	</div>
+
+
+### 4.3. 변분 추론 (Variational Inference)
+- 요컨대, 우리가 구하고자 하는 것은 다음 두 가지이다.
+	- 사후 확률: $$ p_{\theta}(z \mid D) = \frac{p_{\theta}(x, z)}{\int p_{\theta}(D, z) dz} $$
+	- 사후 예측 분포: $$ p_{\theta}(\tilde{x} \mid D) = \int p_{\theta}(\tilde{x} \mid z) \ p_{\theta}(z \mid D) dz $$
+	- 언급했듯 확률분포의 적분은 많은 경우 매우 까다롭거나 계산이 불가능하다.
+	- 심지어 가설을 최대한 잘 잡아도 진짜 답은 가설 공간에 포함되지 않았을 수 있다...
+- 계산이 불가능하다면? 근사하면 된다. 근사해~
+	- 잘 예측한 z는 원래 데이터의 marginal likelihood를 최대화한다는 점을 이용해, 이 문제를 최적화 문제로 바꿀 수 있다.
+	- 여기부터는 기존 관측 데이터 D를 x로 쓴다. 내가 헷갈리니까... ($$ \tilde(x) $$ 와는 다름 주의!!)
+- 관측 데이터 x의 marginal likelihood는 다음과 같이 log를 씌워서 생각할 수 있다. (log-marginal distribution)
+
+$$ log(p(x)) = log(\int p(x, z) dz) $$
+
+- 그리고 여기에 z에 대한 임의의 모델 $$ q(z \mid \theta) $$ (혹은 $$ q{\theta}(z) $$ 라고도 쓰는 것 같음 중요한건 q가 θ에 대한 model이고 latent variable z를 modelling한다는 점임)을 도입하면
+
+$$ = log (\int p(x, z) \cdot \frac{q(z \mid \theta)}{q(z \mid \theta)} dz) = log (\int q(z \mid \theta) \cdot \frac{p(x, z)}{q(z \mid \theta)} dz) $$
+
+- 위 식에 젠센 부등식(Jensen's inequality)을 적용하면 다음이 항상 성립한다. (사실... 이 부분 서술이 맞는지 잘 모르겠음 ㅠㅠ 아닐 수도 있음)
+
+$$ \geq \int q(z \mid \theta) \cdot log(\frac{p(x, z)}{q(z \mid \theta)}) $$
+
+- log의 장점은 곱셈, 나눗셈을 덧셈, 뺄셈으로 쉽게 분리할 수 있다는 점이다.
+
+$$ = \int q(z \mid \theta) \ log(p(x, z)) - \int q(z \mid \theta) \ log(q(z \mid \theta)) $$
+
+- 위 식을 **증거 하한 (evidence of lower bound, ELBO)**라고 한다.
+	- 위 식에서 앞부분은 expected log likelihood $$ E_{q(z \mid \theta}(log(p(x, z))) $$, 뒷부분은 KL divergence이다.
+	- KL divergence는 이 상황에서는 "우리가 실제로 계산할 수 있는 가설 공간"과 "진짜 답" 사이의 거리를 나타내는 지표이다.
+- 결론적으로 z(θ)의 최적화 과정은 marginal likelihood의 최대화와 결을 같이한다. 이 때 정확한 marginal distribution을 계산하는 것은 불가능하지만 하한선(ELBO)을 추정하는 것은 가능하다.
+	- 따라서 우리는 최적화를 위해 두 가지를 선택할 수 있다. ELBO를 최대화하거나, KL divergence를 최소화하거나. 둘 중 계산 가능한 것을 수행하면 된다.
+	- - **변분 추론(Variational Inference)**은 이 최적화 과정을 통해서 variational parameter θ 를 추론하는 과정이다.
+	
