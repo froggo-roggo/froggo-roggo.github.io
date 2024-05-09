@@ -84,12 +84,16 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
 
 ## 3. MLE와 MAP
 - MLE와 MAP의 차이를 요약하면 다음과 같다.
-
+	
+	<div class="scroll">
+	
     |항목| MLE | MAP |
     |:---:|:---:|:---:|
     |최대화하려는 것| $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}}\underset{i=1}{\overset{n}{\prod}}p(x^{i};\theta)$$ |  $$\hat{h}_{MAP} = \underset{h}{\mathrm{argmax}} \ (log (p(D \mid h)) + log (p(h)))$$ |
     |사전 지식| X | O |
 
+	</div>
+	
 	- 갑자기 log 씌워짐 주의: 어차피 찾는 것이 argmax이기도 하고, 하술할 이유로 log를 씌워서 계산하는 편이 생각하기 더 편하기 때문에 씌웠다. (일반적으로 곱셈을 계산할 때 지수함수 or 로그를 쓰면 편하다.)
 
 - 위에서도 확인했듯 MLE는 사전지식을 사용하지 않지만 MAP는 사용한다. (p(h)의 유무 참조) 이것은 왜 중요한가?
@@ -149,7 +153,6 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
 	| Exponential | Gamma |
 
 
-
 ### 4.3. 변분 추론 (Variational Inference)
 - 요컨대, 우리가 구하고자 하는 것은 다음 두 가지이다.
 	- 사후 확률: $$ p_{\theta}(z \mid D) = \frac{p_{\theta}(x, z)}{\int p_{\theta}(D, z) dz} $$
@@ -158,12 +161,12 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
 	- 심지어 가설을 최대한 잘 잡아도 진짜 답은 가설 공간에 포함되지 않았을 수 있다...
 - 계산이 불가능하다면? 근사하면 된다. 근사해~
 	- 잘 예측한 z는 원래 데이터의 marginal likelihood를 최대화한다는 점을 이용해, 이 문제를 최적화 문제로 바꿀 수 있다.
-	- 여기부터는 기존 관측 데이터 D를 x로 쓴다. 내가 헷갈리니까... ($$ \tilde(x) $$ 와는 다름 주의!!)
+	- 여기부터는 기존 관측 데이터 D를 x로 쓴다. 내가 헷갈리니까... ($$ \tilde{x} $$ 와는 다름 주의!!)
 - 관측 데이터 x의 marginal likelihood는 다음과 같이 log를 씌워서 생각할 수 있다. (log-marginal distribution)
 
 $$ log(p(x)) = log(\int p(x, z) dz) $$
 
-- 그리고 여기에 z에 대한 임의의 모델 $$ q(z \mid \theta) $$ (혹은 $$ q{\theta}(z) $$ 라고도 쓰는 것 같음 중요한건 q가 θ에 대한 model이고 latent variable z를 modelling한다는 점임)을 도입하면
+- 그리고 여기에 z에 대한 임의의 모델 $$ q(z \mid \theta) $$ (혹은 $$ q_{\theta}(z) $$ 라고도 쓰는 것 같음 중요한건 q가 θ에 대한 model이고 latent variable z를 modelling한다는 점임)을 도입하면
 
 $$ = log (\int p(x, z) \cdot \frac{q(z \mid \theta)}{q(z \mid \theta)} dz) = log (\int q(z \mid \theta) \cdot \frac{p(x, z)}{q(z \mid \theta)} dz) $$
 
