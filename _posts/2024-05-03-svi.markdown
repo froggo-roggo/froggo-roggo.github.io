@@ -78,7 +78,7 @@ $$L(\theta \mid x_1, x_2, ... , x_n) = \underset{i=1}{\overset{n}{\prod}}p(x^{i}
 
 - 즉 최대가능도추정은 위 가능도 L에 대해 다음 $$ \theta_{MLE} $$를 찾고자 하는 과정이다.
 
-$$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ... , x_n) = \underset{\theta}{\mathrm{argmax}}\underset{i=1}{\overset{n}{\prod}}p(x^{i};\theta)$$
+$$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ... , x_n) \\ = \underset{\theta}{\mathrm{argmax}}\underset{i=1}{\overset{n}{\prod}}p(x^{i};\theta)$$
 
 - 보통은 위 식을 parameter set의 각 parameter에 대해 각각 편미분하여 local minima를 찾음으로써 최적화한다. easy
 
@@ -167,7 +167,7 @@ $$ log(p(x)) = log(\int p(x, z) dz) $$
 
 - 그리고 여기에 z에 대한 임의의 모델 $$ q(z \mid \theta) $$ (q가 적당~히 고른 model이고 θ를 parameter로 가지며 latent variable z를 modelling한다는 것이 중요)을 도입하면
 
-$$ = log (\int p(x, z) \cdot \frac{q(z \mid \theta)}{q(z \mid \theta)} dz) = log (\int q(z \mid \theta) \cdot \frac{p(x, z)}{q(z \mid \theta)} dz) $$
+$$ = log (\int p(x, z) \cdot \frac{q(z \mid \theta)}{q(z \mid \theta)} dz) \\ = log (\int q(z \mid \theta) \cdot \frac{p(x, z)}{q(z \mid \theta)} dz) $$
 
 - 위 식에 젠센 부등식(Jensen's inequality)을 적용하면 다음이 항상 성립한다. (사실... 이 부분 서술이 맞는지 잘 모르겠음 ㅠㅠ 아닐 수도 있음)
 
