@@ -85,14 +85,11 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
 ## 3. MLE와 MAP
 - MLE와 MAP의 차이를 요약하면 다음과 같다.
 	
-	<div class="scroll">
-	
     |항목| MLE | MAP |
     |:---:|:---:|:---:|
-    |최대화하려는 것| $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}}\underset{i=1}{\overset{n}{\prod}}p(x^{i};\theta)$$ |  $$\hat{h}_{MAP} = \underset{h}{\mathrm{argmax}} \ (log (p(D \mid h)) + log (p(h)))$$ |
+    |최대화하려는 것| 가능도 | 사후 확률 |
     |사전 지식| X | O |
 
-	</div>
 	
 	- 갑자기 log 씌워짐 주의: 어차피 찾는 것이 argmax이기도 하고, 하술할 이유로 log를 씌워서 계산하는 편이 생각하기 더 편하기 때문에 씌웠다. (일반적으로 곱셈을 계산할 때 지수함수 or 로그를 쓰면 편하다.)
 
@@ -121,6 +118,8 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
     - 이 믿음이 정말 믿음직한지는 어떻게 테스트할 것인가? 한 가지 방법은 <u>사후 확률을 sampling해서 얻을 수 있는 새로운 data</u>를 예측해보는 것이다.
     - 이를 **사후 예측 분포 (posterior predictive distribution)** 라고 한다.
 		- 이것이 marginal likelihood를 최대화한다면, 거꾸로 h(= z(θ))가 D를 잘 설명한다고 볼 수 있다.
+		- 참고로 여기서부터 h 대신 쓸 z는 가설 h를 정량화하는 latent variable이다.
+		- 그리고 θ는 latent variable z를 parameterize하는 parameter이다. (하다보면 왜 필요한지 알 수 있게 됨...)
 	- 일반적으로 사후 예측 확률은 다음과 같이 주어진다.
 	
 	$$ p(\tilde{x} \in C \mid D) = \sum\limits_{h} p(\tilde{x} \in C \mid h) \ p(h \mid D) $$ (이산 분포)
@@ -128,7 +127,7 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
 	$$ p_{\theta}(\tilde{x} \mid D) = \int p_{\theta}(\tilde{x} \mid z) \ p_{\theta}(z \mid D) dz $$ (연속 분포, h = z(θ)라는 모델로 둠)
 		
 	- 이때 marginal likelihood를 최대화하는 z의 parameter θ: $$ \theta_{max} =  \underset{\theta}{\mathrm{argmax}} \ \int p_{\theta}(z \mid D) dz $$
-	- 이부분이제일헷갈림솔직히문자가다제멋대로라서누가삼국통일좀해줬으면좋겠음
+	- 이부분이제일헷갈리는데 증거를 최대화하는 z의 parameter θ와 MAP를 최대화하는 가설 θ_MAP는 서로 다름에 주의!!
 	
 	- 만약 데이터가 커질 경우, 사후 확률은 델타 함수로 수렴한다. 이 경우 예측 분포는 다음과 같다.
 	
@@ -166,7 +165,7 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
 
 $$ log(p(x)) = log(\int p(x, z) dz) $$
 
-- 그리고 여기에 z에 대한 임의의 모델 $$ q(z \mid \theta) $$ (혹은 $$ q_{\theta}(z) $$ 라고도 쓰는 것 같음 중요한건 q가 θ에 대한 model이고 latent variable z를 modelling한다는 점임)을 도입하면
+- 그리고 여기에 z에 대한 임의의 모델 $$ q(z \mid \theta) $$ (q가 적당~히 고른 model이고 θ를 parameter로 가지며 latent variable z를 modelling한다는 것이 중요)을 도입하면
 
 $$ = log (\int p(x, z) \cdot \frac{q(z \mid \theta)}{q(z \mid \theta)} dz) = log (\int q(z \mid \theta) \cdot \frac{p(x, z)}{q(z \mid \theta)} dz) $$
 
@@ -179,7 +178,7 @@ $$ \geq \int q(z \mid \theta) \cdot log(\frac{p(x, z)}{q(z \mid \theta)}) $$
 $$ = \int q(z \mid \theta) \ log(p(x, z)) - \int q(z \mid \theta) \ log(q(z \mid \theta)) $$
 
 - 위 식을 **증거 하한 (evidence of lower bound, ELBO)**라고 한다.
-	- 위 식에서 앞부분은 expected log likelihood $$ E_{q(z \mid \theta}(log(p(x, z))) $$, 뒷부분은 KL divergence이다.
+	- 위 식에서 앞부분은 expected log likelihood $$ E_{q(z \mid \theta)}(log(p(x, z))) $$, 뒷부분은 KL divergence이다.
 	- KL divergence는 이 상황에서는 "우리가 실제로 계산할 수 있는 가설 공간"과 "진짜 답" 사이의 거리를 나타내는 지표이다.
 - 결론적으로 z(θ)의 최적화 과정은 marginal likelihood의 최대화와 결을 같이한다. 이 때 정확한 marginal distribution을 계산하는 것은 불가능하지만 하한선(ELBO)을 추정하는 것은 가능하다.
 	- 따라서 우리는 최적화를 위해 두 가지를 선택할 수 있다. ELBO를 최대화하거나, KL divergence를 최소화하거나. 둘 중 계산 가능한 것을 수행하면 된다.
