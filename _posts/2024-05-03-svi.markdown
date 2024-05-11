@@ -91,7 +91,7 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
     |사전 지식| X | O |
 
 	
-	- 갑자기 log 씌워짐 주의: 어차피 찾는 것이 argmax이기도 하고, 하술할 이유로 log를 씌워서 계산하는 편이 생각하기 더 편하기 때문에 씌웠다. (일반적으로 곱셈을 계산할 때 지수함수 or 로그를 쓰면 편하다.)
+- 아래부터 나올 식에 갑자기 log 씌워짐 주의: 어차피 찾는 것이 argmax이기도 하고, 하술할 이유로 log를 씌워서 계산하는 편이 생각하기 더 편하기 때문에 씌웠다. (일반적으로 곱셈을 계산할 때 지수함수 or 로그를 쓰면 편하다.)
 
 - 위에서도 확인했듯 MLE는 사전지식을 사용하지 않지만 MAP는 사용한다. (p(h)의 유무 참조) 이것은 왜 중요한가?
     - 쉽게 말해 "어떤 가설은 다른 가설보다 훨씬 더 그럴듯하다는 배경 지식을 반영함으로써 최적화를 최적화한다"고 생각하면 될 것 같다.
@@ -121,10 +121,8 @@ $$\theta_{MLE} = \underset{\theta}{\mathrm{argmax}} \ L(\theta \mid x_1, x_2, ..
 		- 참고로 여기서부터 h 대신 쓸 z는 가설 h를 정량화하는 latent variable이다.
 		- 그리고 θ는 latent variable z를 parameterize하는 parameter이다. (하다보면 왜 필요한지 알 수 있게 됨...)
 	- 일반적으로 사후 예측 확률은 다음과 같이 주어진다.
-	
-	$$ p(\tilde{x} \in C \mid D) = \sum\limits_{h} p(\tilde{x} \in C \mid h) \ p(h \mid D) $$ (이산 분포)
-
-	$$ p_{\theta}(\tilde{x} \mid D) = \int p_{\theta}(\tilde{x} \mid z) \ p_{\theta}(z \mid D) dz $$ (연속 분포, h = z(θ)라는 모델로 둠)
+		- 이산 분포: $$ p(\tilde{x} \in C \mid D) = \sum\limits_{h} p(\tilde{x} \in C \mid h) \ p(h \mid D) $$
+		- 연속 분포: $$ p_{\theta}(\tilde{x} \mid D) = \int p_{\theta}(\tilde{x} \mid z) \ p_{\theta}(z \mid D) dz $$ (h = z(θ)라는 모델로 둠)
 		
 	- 이때 marginal likelihood를 최대화하는 z의 parameter θ: $$ \theta_{max} =  \underset{\theta}{\mathrm{argmax}} \ \int p_{\theta}(z \mid D) dz $$
 	- 이부분이제일헷갈리는데 증거를 최대화하는 z의 parameter θ와 MAP를 최대화하는 가설 θ_MAP는 서로 다름에 주의!!
@@ -182,5 +180,5 @@ $$ = \int q(z \mid \theta) \ log(p(x, z)) - \int q(z \mid \theta) \ log(q(z \mid
 	- KL divergence는 이 상황에서는 "우리가 실제로 계산할 수 있는 가설 공간"과 "진짜 답" 사이의 거리를 나타내는 지표이다.
 - 결론적으로 z(θ)의 최적화 과정은 marginal likelihood의 최대화와 결을 같이한다. 이 때 정확한 marginal distribution을 계산하는 것은 불가능하지만 하한선(ELBO)을 추정하는 것은 가능하다.
 	- 따라서 우리는 최적화를 위해 두 가지를 선택할 수 있다. ELBO를 최대화하거나, KL divergence를 최소화하거나. 둘 중 계산 가능한 것을 수행하면 된다.
-	- - **변분 추론(Variational Inference)**은 이 최적화 과정을 통해서 variational parameter θ 를 추론하는 과정이다.
+	- **변분 추론(Variational Inference)**은 이 최적화 과정을 통해서 variational parameter θ 를 추론하는 과정이다.
 	
