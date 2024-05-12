@@ -326,16 +326,20 @@ footer {
 	.sidebar-item {
 		flex: 1 1 auto;
 		overflow-y: auto;
+		word-break: break-all;
 		max-height: 110px;
+		margin-right: 10px;
 	}
 	
 	.sidebar-item::-webkit-scrollbar {
-      width: 3px;  
+      width: 3px;
+	  height: 3px;
     }
     .sidebar-item::-webkit-scrollbar-thumb {
       height: auto;
       background: rgba(0, 0, 0, .3);
       border-radius: 3px;
+	  
     }
     .sidebar-item::-webkit-scrollbar-track {
       background: rgba(0, 0, 0, .1); 
