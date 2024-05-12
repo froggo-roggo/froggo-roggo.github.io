@@ -325,7 +325,21 @@ footer {
 
 	.sidebar-item {
 		flex: 1 1 auto;
+		overflow-y: auto;
+		max-height: 110px;
 	}
+	
+	.sidebar-item::-webkit-scrollbar {
+      width: 3px;  
+    }
+    .sidebar-item::-webkit-scrollbar-thumb {
+      height: auto;
+      background: rgba(0, 0, 0, .3);
+      border-radius: 3px;
+    }
+    .sidebar-item::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, .1); 
+    }
 
 	.sidebar-header {
 		margin-bottom: 0px;
