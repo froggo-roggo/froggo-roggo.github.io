@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Kalman Filter
-date: 2024-05-03
+date: 2024-07-23
 category: Probabilistic-Modelling
 use_math: true
 ---
