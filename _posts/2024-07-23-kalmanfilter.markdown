@@ -59,23 +59,23 @@ use_math: true
   - 이전 state까지만 보고 추정한 지금 상태 $$x_t$$에 대한 belief: $$\overline{bel}(x_t)$$
   - 현재 state에서 observe할 수 있는 output: $$p(z_t \mid x_t)$$
   - 현재의 output z까지 보고 추정한 지금 상태 $$x_t$$에 대한 belief: $$bel(x_t)$$
-    - 정의에 따르면, $$bel(x_t) = p(x_t|z_{1:t}, u_{1:t})$$ 이다. 하지만 이것을 단숨에 계산하기는 어렵다.
-	- 그러니 우선 귀납적으로 계산해보기 위해 <u>베이즈 정리를 적용<\u>하여 $$=\nu \cdot p(z_t|x_t, z_{1:t-1}, u_t) \cdot p(x_t|z_{1:t-1}, u_{1:t})$$ 로 분리해보자. 이는 위의 식에서 z를 $$z_t$$와 $$z_{1:t-1}$$로 분리한 것과 같다.
+    - 정의에 따르면, $$bel(x_t) = p(x_t \mid z_{1:t}, u_{1:t})$$ 이다. 하지만 이것을 단숨에 계산하기는 어렵다.
+	- 그러니 우선 귀납적으로 계산해보기 위해 <u>베이즈 정리를 적용<\u>하여 $$=\nu \cdot p(z_t \mid x_t, z_{1:t-1}, u_t) \cdot p(x_t \mid z_{1:t-1}, u_{1:t})$$ 로 분리해보자. 이는 위의 식에서 z를 $$z_t$$와 $$z_{1:t-1}$$로 분리한 것과 같다.
 	- 여기서 **Markov assumption**
 	  - 시간에 따른 모든 u가 서로 독립이고, 마찬가지로 z가 독립이라고 가정.
 	  - 그리고 모든 사전 정보는 $$bel(x_{t-1})$$에 함축되어 있으며, 현재 state $$x_t$$는 오직 $$x_{t-1}$$의 영향만 받는다고 가정.
-	  - 그러면 $$z_t$$는 애초에 $$z_{1:t-1}, u_t$$와는 무관하므로, $$p(z_t|x_t)$$가 된다.
-	  - 즉 $$ = \nu \cdot p(z_t|x_t) \cdot p(x_t|z_{1:t-1}, u_{1:t})$$
-	- 그리고 state x에 대해 [law of total probability](https://en.wikipedia.org/wiki/Law_of_total_probability)를 적용해, $$p(x_t|z_{1:t-1}, u_{1:t})$$를 이전 state에 대한 적분으로 나타낼 수 있다.
-	  - $$p(x_t|z_{1:t-1}, u_{1:t}) = \int_{x_{t-1}} p(x_t \mid x_{t-1}, z_{1:t-1}, u_{1:t}) \cdot p(x_{t-1} \mid z_{1:t-1}, u_{1:t}) dx_{t-1} $$
+	  - 그러면 $$z_t$$는 애초에 $$z_{1:t-1}, u_t$$와는 무관하므로, $$p(z_t \mid x_t)$$가 된다.
+	  - 즉 $$ = \nu \cdot p(z_t \mid x_t) \cdot p(x_t \mid z_{1:t-1}, u_{1:t})$$
+	- 그리고 state x에 대해 [law of total probability](https://en.wikipedia.org/wiki/Law_of_total_probability)를 적용해, $$p(x_t \mid z_{1:t-1}, u_{1:t})$$를 이전 state에 대한 적분으로 나타낼 수 있다.
+	  - $$p(x_t \mid z_{1:t-1}, u_{1:t}) = \int_{x_{t-1}} p(x_t \mid x_{t-1}, z_{1:t-1}, u_{1:t}) \cdot p(x_{t-1} \mid z_{1:t-1}, u_{1:t}) dx_{t-1} $$
       - 그리고 다시 Markov assumtion을 적용하면, 첫 번째 항에서 z와 u를 없앨 수 있다. ($$ p(x_t \mid x_{t-1}, z_{1:t-1}, u_{1:t}) = p(x_t \mid x_{t-1}) $$)
 	  - 또한 이전 state는 현재 input의 영향을 받지 않으니 두 번째 항에서 $$u_t$$를 없애고 $$u_{1:t-1}$$로 쓸 수 있다.
-	  - 즉 $$= \nu \cdot p(z_t|x_t) \int_{x_{t-1}} p(x_t \mid x_{t-1}) \cdot p(x_{t-1} \mid z_{1:t-1}, u_{1:t-1}) dx_{t-1}$$
+	  - 즉 $$= \nu \cdot p(z_t \mid x_t) \int_{x_{t-1}} p(x_t \mid x_{t-1}) \cdot p(x_{t-1} \mid z_{1:t-1}, u_{1:t-1}) dx_{t-1}$$
     - 이렇게 되면, 적분의 두 번째 항이 $$bel(x_{t-1})$$의 정의와 일치하게 된다.
-	  - 즉 $$= \nu \cdot p(z_t|x_t) \int_{x_{t-1}} p(x_t \mid x_{t-1}) \cdot bel(x_{t-1}) dx_{t-1}$$
+	  - 즉 $$= \nu \cdot p(z_t \mid x_t) \int_{x_{t-1}} p(x_t \mid x_{t-1}) \cdot bel(x_{t-1}) dx_{t-1}$$
 	- 또한 적분 식 전체는 해석해보면 이전 state까지만 보고 추정한 지금 상태에 대한 belief, 즉 $$\overline{bel}(x_t)$$에 해당한다.
-	- 따라서 최종적으로는 $$bel(x_t) = \nu \cdot p(z_t|x_t) \cdot \overline{bel}(x_t) $$와 같은 식이 성립한다!
-      - 이를 말로 해석하자면 "이전까지의 정보만 가지고 현재 상태를 해석한 $$\overline{bel}(x_t)$$가 있을 때, 현재 관측한 $$p(z_t|x_t)$$를 사용하여 correction한 결과가 현재 state에 대한 belief $$ bel(x_t) $$가 된다"는 뜻이다.
+	- 따라서 최종적으로는 $$bel(x_t) = \nu \cdot p(z_t \mid x_t) \cdot \overline{bel}(x_t) $$와 같은 식이 성립한다!
+      - 이를 말로 해석하자면 "이전까지의 정보만 가지고 현재 상태를 해석한 $$\overline{bel}(x_t)$$가 있을 때, 현재 관측한 $$p(z_t \mid x_t)$$를 사용하여 correction한 결과가 현재 state에 대한 belief $$ bel(x_t) $$가 된다"는 뜻이다.
 
 ## 2. Kalman Filter
 - Kalman Filter는 위 과정에서 쓰이는 확률 분포가 Gaussian인 경우를 의미한다.
