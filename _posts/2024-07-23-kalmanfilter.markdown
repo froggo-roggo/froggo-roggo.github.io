@@ -103,7 +103,7 @@ use_math: true
 	  - 개념적으로는 이해하겠는데, 어떻게 합친다는 걸까? **관측할 수 있는 observation과, 앞서 예측한 x에서 나올 수 있는 결과인 (optimal) forecast를 비교하는 방식**이다.
 	- 우선 observation과 forecast의 차이는 **잔차(residual)**이라고 부르며, $$y_{t /mid t-1}$$로 쓴다.
 	  - 이는 $$y_{t /mid t-1} = z_t - H_t \overline{bel}(x_t) $$로 구할 수 있다.
-	  - 그리고 여기에 대한 covariance는 $$ S_t = H_t P_{t \mid t-1} H_{t}^{T}+R_t $$이다. 위의 estimate covariance와 식이 매우 비슷하다.
+	  - 그리고 여기에 대한 covariance는 $$ S_t = H_t P_{t \mid t-1} H_{t}^{T}+R_t $$이다. 위의 prediction covariance와 식이 매우 비슷하다.
 	  - 이를 mesurement pre-fit residual이라고도 한다. 말 그대로 fit 이전에 '예측만으로 구해본 forecast가 observation과 얼마나 차이나는지'에 대한 추정치라는 뜻이다.
 	- $$P_{t \mid t-1}$$ (prediction의 covariance), $$H_t$$ (observation model), $$S_t$$ (observation과 forecast의 차이의 covariance)를 모두 알고 있으므로 **Kalman gain**을 계산할 수 있다.
 	  - Kalman gain($$K_t$$)은 **'내 예측과 관측 결과 중 무엇을 더 믿을지'의 가중치**를 결정한다.
