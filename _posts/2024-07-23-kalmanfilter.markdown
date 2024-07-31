@@ -109,7 +109,7 @@ use_math: true
 	  - Kalman gain($$K_t$$)은 **'내 예측과 관측 결과 중 무엇을 더 믿을지'의 가중치**를 결정한다.
 	    - Gain이 0이면, 나는 내가 observation을 보기 전에 예측한 state만을 믿는다.
 		- Gain이 1이면, observation만을 믿는다.
-  	    - 즉 $$K_t$$를 실제 update에 적용했을 때의 식은 $$bel(x_t) = \overline{bel}(x_t) + K_t \cdot (y_{t \mid t-1}) $$ 가 된다.
+		- 즉 $$K_t$$를 실제 update에 적용했을 때의 식을 살짝 미리보기 하면 $$bel(x_t) = \overline{bel}(x_t) + K_t \cdot (y_{t \mid t-1}) $$ 가 된다.
 	  - 정의 및 차원이 맞으려면 $$K_t$$의 식은 어때야 할까?
 	    - 우선 y의 차원은 결국 observation과 같기 때문에, K의 계산은 기본적으로 observation model인 H에서 시작한다.
 		- Kalman gain은 작아질수록 observation을 신뢰하지 않는다. 따라서 y에 대한 covariance인 S로 나눠준다. (즉 역행렬을 곱한다.)
