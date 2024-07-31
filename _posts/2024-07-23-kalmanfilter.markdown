@@ -126,7 +126,7 @@ use_math: true
   - 만약 1D Gaussian 분포에 대한 1D Kalman filter를 계산하고자 한다면, estimate는 분포의 mean($$\mu$$)이고, uncertainty 또는 covariance는 분포의 variance($$\sigma^2$$)라고 생각하며 계산하면 된다.
 - 예를 들어, **1D Kalman filter에 대한 prediction 및 update**는 다음과 같다.
   - (1) Prediction
-    - **Predicted state estimate**: $$\overline{bel}(x_t) = \overline{\mu}_{x, t} = \mu_{x, t} + u_t$$
+    - **Predicted state estimate**: $$\overline{bel}(x_t) = \overline{\mu}_{x, t} = \mu_{x, t-1} + u_t$$
 	- **Predicted estimate variance**: $$\overline{\sigma}_{P, t}^2 = \sigma_{P, t-1}^2 + \sigma_{Q, t}^2$$
 	  - 여기서 P는 state에 대한 variance, Q는 process(motion, transition 등등...)에 대한 variance임을 의미한다. 위 식과 비교하기 쉬우라고 저렇게 씀...
   - (2) Update
