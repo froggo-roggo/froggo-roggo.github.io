@@ -81,16 +81,16 @@ use_math: true
 - Kalman filter는 위 과정에서 쓰이는 확률 분포가 Gaussian인 경우를 의미한다.
   - [이전 글](/probabilistic-modelling/2024/05/03/svi.html)에서도 언급했듯 prior와 posterior의 (그리고 경우에 따라 likelihood까지) 분포가 모두 같으면 계산이 (특히 **적분**이!!) 매우 쉽다. Gaussian (normal) distribution은 그 조건을 만족한다.
 - 위에서 설명한 베이지안 필터의 개념을 더 정확한 수식으로 만들기 위해 다음과 같은 state transition 모델을 가정하자. ([참조](https://en.wikipedia.org/wiki/Kalman_filter))
-  - 1. 사용자가 input을 입력하는 control-input model $$B_t$$와 input $$u_t$$
-  - 2. 사용자가 (정확히는 알 수 없지만) hidden state의 변화를 가정하는 state-transition model $$F_t$$와 process noise의 covariance $$Q_t$$
-  - 3. 사용자가 output을 관측하는 observation model $$H_t$$와 observation $$z_t$$, 그리고 observation noise의 covariance $$R_t$$
-  - 4. 관측할 수 없는 hidden state $$x_t$$, process noise $$w_t$$, observation noise $$v_t$$, 그리고 예측의 정확도를 나타내는 estimate covariance $$P_t$$
+  1. 사용자가 input을 입력하는 control-input model $$B_t$$와 input $$u_t$$
+  2. 사용자가 (정확히는 알 수 없지만) hidden state의 변화를 가정하는 state-transition model $$F_t$$와 process noise의 covariance $$Q_t$$
+  3. 사용자가 output을 관측하는 observation model $$H_t$$와 observation $$z_t$$, 그리고 observation noise의 covariance $$R_t$$
+  4. 관측할 수 없는 hidden state $$x_t$$, process noise $$w_t$$, observation noise $$v_t$$, 그리고 예측의 정확도를 나타내는 estimate covariance $$P_t$$
 - 그러면 state x 및 observation z에 대한 계산식은 각각 다음과 같다.
   - $$x_t = F_t x_{t-1} + B_t u_t + w_t$$
   - $$z_t = H_t x_t + v_t$$
   
 - Kalman filter는 다음과 같은 두 단계를 반복해 재귀적으로 현재의 값을 추정한다.
-  - 1. 예측 단계 (Prediction)
+  1. 예측 단계 (Prediction)
     - State에 대한 예측, 즉 $$\overline{bel}(x_t)$$를 계산하는 단계이다.
 	  - 여기까지는 오직 t-1까지 얻은 정보로만 추론을 하기 때문에, 이 시점에서 state에 대한 믿음을 $$\hat{x}_{t \mid t-1}$$로 쓰기도 한다.
 	- **Predicted state estimate**: $$\overline{bel}(x_t) = F_t bel(x_{t-1}) + B_t u_t + w_t$$
@@ -98,7 +98,7 @@ use_math: true
 	- **Observation**: $$z_t = H_t x_t + v_t$$
 	  - x_t는 아직 모른다. 우리가 알거나 가정한 것은 z_t와 H_t 뿐이다.
 	
-  - 2. 보정 단계 (Update)
+  2. 보정 단계 (Update)
     - 예측($$\overline{bel}(x_t)$$) 분포와 관측($$p(z_t \mid x_t)$$) 분포를 합해서 현재 state에 대한 믿음을 보정($$bel(x_t)$$)하는 단계이다.
 	  - 개념적으로는 이해하겠는데, 어떻게 합친다는 걸까? **관측할 수 있는 observation과, 앞서 예측한 x에서 나올 수 있는 결과인 (optimal) forecast를 비교하는 방식**이다.
 	- 우선 observation과 forecast의 차이는 **잔차(residual)**이라고 부르며, $$y_{t /mid t-1}$$로 쓴다.
@@ -125,11 +125,11 @@ use_math: true
   - 앞서 언급했듯 칼만 필터는 가우시안 분포에 대한 베이지안 필터이므로, 1D 또는 multivariate Gaussian distribution을 대입해주면 구체적인 값을 계산할 수 있다.
   - 만약 1D Gaussian 분포에 대한 1D Kalman filter를 계산하고자 한다면, estimate는 분포의 mean($$\mu$$)이고, uncertainty 또는 covariance는 분포의 variance($$\sigma^2$$)라고 생각하며 계산하면 된다.
 - 예를 들어, **1D Kalman filter에 대한 prediction 및 update**는 다음과 같다.
-  - 1. Prediction
+  1. Prediction
     - **Predicted state estimate**: $$\overline{bel}(x_t) = \overline{\mu}_{x, t} = \mu_{x, t} + u_t$$
 	- **Predicted estimate variance**: $$\overline{\sigma}_{P, t}^2 = \sigma_{P, t-1}^2 + \sigma_{Q, t}^2$$
 	  - 여기서 P는 state에 대한 variance, Q는 process(motion, transition 등등...)에 대한 variance임을 의미한다. 위 식과 비교하기 쉬우라고 저렇게 씀...
-  - 2. Update
+  2. Update
     - **Kalman gain**: $$K_t = \frac{\overline{\sigma}_{P, t}^2}{\overline{\sigma}_{P, t}^2+\overline{\sigma}_{R, t}^2}$$
 	  - R은 마찬가지로 해당 σ가 observation에 대한 variance임을 의미한다. 아 그냥 xyz로 통일할걸... 너무 먼 길을 옴
 	- **Updated predicted state estimate**: $$bel(x_t) = \mu_{x, t} = \overline{\mu}_{x, t} + K_t (\mu_{z, t} - \overline{\mu}_{x, t})$$
