@@ -91,49 +91,49 @@ use_math: true
   
 - Kalman filter는 다음과 같은 두 단계를 반복해 재귀적으로 현재의 값을 추정한다.
   1. 예측 단계 (Prediction)
-    - State에 대한 예측, 즉 $$\overline{bel}(x_t)$$를 계산하는 단계이다.
-	  - 여기까지는 오직 t-1까지 얻은 정보로만 추론을 하기 때문에, 이 시점에서 state에 대한 믿음을 $$\hat{x}_{t \mid t-1}$$로 쓰기도 한다.
-	- **Predicted state estimate**: $$\overline{bel}(x_t) = F_t bel(x_{t-1}) + B_t u_t + w_t$$
-	  - Predicted estimate covariance: $$P_{t \mid t-1} = F_t P_{t-1 \mid t-1} F_{t}^{T}+Q_{t-1}$$
-	- **Observation**: $$z_t = H_t x_t + v_t$$
-	  - x_t는 아직 모른다. 우리가 알거나 가정한 것은 z_t와 H_t 뿐이다.
+  - State에 대한 예측, 즉 $$\overline{bel}(x_t)$$를 계산하는 단계이다.
+	- 여기까지는 오직 t-1까지 얻은 정보로만 추론을 하기 때문에, 이 시점에서 state에 대한 믿음을 $$\hat{x}_{t \mid t-1}$$로 쓰기도 한다.
+  - **Predicted state estimate**: $$\overline{bel}(x_t) = F_t bel(x_{t-1}) + B_t u_t + w_t$$
+	- Predicted estimate covariance: $$P_{t \mid t-1} = F_t P_{t-1 \mid t-1} F_{t}^{T}+Q_{t-1}$$
+  - **Observation**: $$z_t = H_t x_t + v_t$$
+	- x_t는 아직 모른다. 우리가 알거나 가정한 것은 z_t와 H_t 뿐이다.
 	
   2. 보정 단계 (Update)
-    - 예측($$\overline{bel}(x_t)$$) 분포와 관측($$p(z_t \mid x_t)$$) 분포를 합해서 현재 state에 대한 믿음을 보정($$bel(x_t)$$)하는 단계이다.
-	  - 개념적으로는 이해하겠는데, 어떻게 합친다는 걸까? **관측할 수 있는 observation과, 앞서 예측한 x에서 나올 수 있는 결과인 (optimal) forecast를 비교하는 방식**이다.
-	- 우선 observation과 forecast의 차이는 **잔차(residual)**이라고 부르며, $$y_{t /mid t-1}$$로 쓴다.
-	  - 이는 $$y_{t /mid t-1} = z_t - H_t \overline{bel}(x_t) $$로 구할 수 있다.
-	  - 그리고 여기에 대한 covariance는 $$ S_t = H_t P_{t \mid t-1} H_{t}^{T}+R_t $$이다. 위의 prediction covariance와 식이 매우 비슷하다.
-	  - 이를 mesurement pre-fit residual이라고도 한다. 말 그대로 fit 이전에 '예측만으로 구해본 forecast가 observation과 얼마나 차이나는지'에 대한 추정치라는 뜻이다.
-	- $$P_{t \mid t-1}$$ (prediction의 covariance), $$H_t$$ (observation model), $$S_t$$ (observation과 forecast의 차이의 covariance)를 모두 알고 있으므로 **Kalman gain**을 계산할 수 있다.
-	  - Kalman gain($$K_t$$)은 **'내 예측과 관측 결과 중 무엇을 더 믿을지'의 가중치**를 결정한다.
-	    - Gain이 0이면, 나는 내가 observation을 보기 전에 예측한 state만을 믿는다.
-		- Gain이 1이면, observation만을 믿는다.
-  	    - 즉 $$K_t$$를 실제 update에 적용했을 때의 식은 $$bel(x_t) = \overline{bel}(x_t) + K_t \cdot (y_{t /mid t-1}) $$ 가 된다.
-	  - 정의 및 차원이 맞으려면 $$K_t$$의 식은 어때야 할까?
-	    - 우선 y의 차원은 결국 observation과 같기 때문에, K의 계산은 기본적으로 observation model인 H에서 시작한다.
-		- Kalman gain은 작아질수록 observation을 신뢰하지 않는다. 따라서 y에 대한 covariance인 S로 나눠준다. (즉 역행렬을 곱한다.)
-		  - S = HPH + R이므로, 즉 observation의 covariance R이 커질수록 K는 줄어들게 된다. observation이 불확실하다는 뜻이다.
-		- 그리고 Kalman gain은 커질수록 나의 기존 estimation을 신뢰하지 않는다. 따라서 $$\overline{bel}(x_t)$$에 대한 prediction covariance P를 곱한다.
-		  - 즉 prediction의 covariance P가 클수록 K가 1에 가까워져야 한다. 나의 기존 (observation을 까보기 이전의) estimation이 불확실하다는 뜻이다.
-      - 결론적으로 Kalman gain의 식은 $$K_t = P_{t \mid t-1} H_{t}^{T} S_{t}^{-1} $$ 이다.
-	- 그리고 **관측을 반영하여 새로 계산한 state (updated predicted state estimate)** $$x_t$$는 앞서 언급했듯 $$bel(x_t) = \overline{bel}(x_t) + K_t \cdot (y_{t /mid t-1}) $$가 된다.
-	  - t에서 새로 얻은 정보를 사용했으므로, 새로이 계산한 state에 대한 믿음을 $$\hat{x}_{t \mid t}$$로 쓰기도 한다.
-	- 마지막으로, **관측을 반영하여 새로 계산한 state에 대한 covariance (updated predicted estimate variance)** $$P_{t \mid t} = (I - K_t H_t)P_{t \mid t-1}$$이다.
+  - 예측($$\overline{bel}(x_t)$$) 분포와 관측($$p(z_t \mid x_t)$$) 분포를 합해서 현재 state에 대한 믿음을 보정($$bel(x_t)$$)하는 단계이다.
+	- 개념적으로는 이해하겠는데, 어떻게 합친다는 걸까? **관측할 수 있는 observation과, 앞서 예측한 x에서 나올 수 있는 결과인 (optimal) forecast를 비교하는 방식**이다.
+  - 우선 observation과 forecast의 차이는 **잔차(residual)**이라고 부르며, $$y_{t /mid t-1}$$로 쓴다.
+	- 이는 $$y_{t /mid t-1} = z_t - H_t \overline{bel}(x_t) $$로 구할 수 있다.
+	- 그리고 여기에 대한 covariance는 $$ S_t = H_t P_{t \mid t-1} H_{t}^{T}+R_t $$이다. 위의 prediction covariance와 식이 매우 비슷하다.
+	- 이를 mesurement pre-fit residual이라고도 한다. 말 그대로 fit 이전에 '예측만으로 구해본 forecast가 observation과 얼마나 차이나는지'에 대한 추정치라는 뜻이다.
+  - $$P_{t \mid t-1}$$ (prediction의 covariance), $$H_t$$ (observation model), $$S_t$$ (observation과 forecast의 차이의 covariance)를 모두 알고 있으므로 **Kalman gain**을 계산할 수 있다.
+	- Kalman gain($$K_t$$)은 **'내 예측과 관측 결과 중 무엇을 더 믿을지'의 가중치**를 결정한다.
+	  - Gain이 0이면, 나는 내가 observation을 보기 전에 예측한 state만을 믿는다.
+	  - Gain이 1이면, observation만을 믿는다.
+  	  - 즉 $$K_t$$를 실제 update에 적용했을 때의 식은 $$bel(x_t) = \overline{bel}(x_t) + K_t \cdot (y_{t /mid t-1}) $$ 가 된다.
+	- 정의 및 차원이 맞으려면 $$K_t$$의 식은 어때야 할까?
+	  - 우선 y의 차원은 결국 observation과 같기 때문에, K의 계산은 기본적으로 observation model인 H에서 시작한다.
+	  - Kalman gain은 작아질수록 observation을 신뢰하지 않는다. 따라서 y에 대한 covariance인 S로 나눠준다. (즉 역행렬을 곱한다.)
+		- S = HPH + R이므로, 즉 observation의 covariance R이 커질수록 K는 줄어들게 된다. observation이 불확실하다는 뜻이다.
+	  - 그리고 Kalman gain은 커질수록 나의 기존 estimation을 신뢰하지 않는다. 따라서 $$\overline{bel}(x_t)$$에 대한 prediction covariance P를 곱한다.
+		- 즉 prediction의 covariance P가 클수록 K가 1에 가까워져야 한다. 나의 기존 (observation을 까보기 이전의) estimation이 불확실하다는 뜻이다.
+    - 결론적으로 Kalman gain의 식은 $$K_t = P_{t \mid t-1} H_{t}^{T} S_{t}^{-1} $$ 이다.
+  - 그리고 **관측을 반영하여 새로 계산한 state (updated predicted state estimate)** $$x_t$$는 앞서 언급했듯 $$bel(x_t) = \overline{bel}(x_t) + K_t \cdot (y_{t /mid t-1}) $$가 된다.
+	- t에서 새로 얻은 정보를 사용했으므로, 새로이 계산한 state에 대한 믿음을 $$\hat{x}_{t \mid t}$$로 쓰기도 한다.
+  - 마지막으로, **관측을 반영하여 새로 계산한 state에 대한 covariance (updated predicted estimate variance)** $$P_{t \mid t} = (I - K_t H_t)P_{t \mid t-1}$$이다.
 
 - 결국 핵심은 (1) $$\overline{bel}(x_t)$$를 계산하고, (2) $$K_t$$를 계산하고, 이를 바탕으로 (3) $$bel(x_t)$$를 계산하는 것이다.
   - 앞서 언급했듯 칼만 필터는 가우시안 분포에 대한 베이지안 필터이므로, 1D 또는 multivariate Gaussian distribution을 대입해주면 구체적인 값을 계산할 수 있다.
   - 만약 1D Gaussian 분포에 대한 1D Kalman filter를 계산하고자 한다면, estimate는 분포의 mean($$\mu$$)이고, uncertainty 또는 covariance는 분포의 variance($$\sigma^2$$)라고 생각하며 계산하면 된다.
 - 예를 들어, **1D Kalman filter에 대한 prediction 및 update**는 다음과 같다.
   1. Prediction
-    - **Predicted state estimate**: $$\overline{bel}(x_t) = \overline{\mu}_{x, t} = \mu_{x, t} + u_t$$
-	- **Predicted estimate variance**: $$\overline{\sigma}_{P, t}^2 = \sigma_{P, t-1}^2 + \sigma_{Q, t}^2$$
-	  - 여기서 P는 state에 대한 variance, Q는 process(motion, transition 등등...)에 대한 variance임을 의미한다. 위 식과 비교하기 쉬우라고 저렇게 씀...
+  - **Predicted state estimate**: $$\overline{bel}(x_t) = \overline{\mu}_{x, t} = \mu_{x, t} + u_t$$
+  - **Predicted estimate variance**: $$\overline{\sigma}_{P, t}^2 = \sigma_{P, t-1}^2 + \sigma_{Q, t}^2$$
+	- 여기서 P는 state에 대한 variance, Q는 process(motion, transition 등등...)에 대한 variance임을 의미한다. 위 식과 비교하기 쉬우라고 저렇게 씀...
   2. Update
-    - **Kalman gain**: $$K_t = \frac{\overline{\sigma}_{P, t}^2}{\overline{\sigma}_{P, t}^2+\overline{\sigma}_{R, t}^2}$$
-	  - R은 마찬가지로 해당 σ가 observation에 대한 variance임을 의미한다. 아 그냥 xyz로 통일할걸... 너무 먼 길을 옴
-	- **Updated predicted state estimate**: $$bel(x_t) = \mu_{x, t} = \overline{\mu}_{x, t} + K_t (\mu_{z, t} - \overline{\mu}_{x, t})$$
-	- **Updated predicted estimate variance**: $$\sigma_{P, t}^2 = (1-K_t) \overline{\sigma}_{P, t}^2$$
+  - **Kalman gain**: $$K_t = \frac{\overline{\sigma}_{P, t}^2}{\overline{\sigma}_{P, t}^2+\overline{\sigma}_{R, t}^2}$$
+	- R은 마찬가지로 해당 σ가 observation에 대한 variance임을 의미한다. 아 그냥 xyz로 통일할걸... 너무 먼 길을 옴
+  - **Updated predicted state estimate**: $$bel(x_t) = \mu_{x, t} = \overline{\mu}_{x, t} + K_t (\mu_{z, t} - \overline{\mu}_{x, t})$$
+  - **Updated predicted estimate variance**: $$\sigma_{P, t}^2 = (1-K_t) \overline{\sigma}_{P, t}^2$$
 
 ## 3. Particle Filter
 - Particle filter는 확률 분포가 가우시안 분포가 아닌 일반적인 경우에 대해, 랜덤 샘플링을 통해서 확률 분포를 모사하여 필터링을 적용하는 과정을 의미한다.
