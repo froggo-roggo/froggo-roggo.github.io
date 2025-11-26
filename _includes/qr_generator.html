@@ -1,0 +1,56 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<div class="qr-container" style="padding: 20px; border: 1px solid #ddd; border-radius: 5px; background: #f9f9f9; max-width: 400px; margin: 20px auto;">
+    <h3 style="margin-top: 0;">🔗 QR Code generator</h3>
+    
+    <input type="text" id="qr-input" placeholder="여기에 링크나 텍스트를 입력하세요" 
+           style="width: 100%; padding: 10px; margin-bottom: 15px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 3px;">
+    
+    <button id="qr-generate-button" 
+            style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; font-weight: bold;">
+        생성!
+    </button>
+    
+    <div id="qrcode-output" style=" width: 100%; height: 300px; text-align: center; margin-top: 15px; padding: 10px; background: white; border: 1px solid #eee;">
+	</div>
+    
+    <p id="qr-guide" style="text-align: center; color: #888;">입력 후 버튼을 눌러보세요</p>
+</div>
+
+<script>
+    var qrcode = new QRCode(document.getElementById("qrcode-output"), {
+        width: 200,
+        height: 200
+    });
+
+    var input = document.getElementById('qr-input');
+    var outputDiv = document.getElementById('qrcode-output');
+    var guideText = document.getElementById('qr-guide');
+    var generateButton = document.getElementById('qr-generate-button');
+
+    function makeCode() {      
+        var text = input.value;
+        
+        if (!text) {
+            qrcode.clear();
+			outputDiv.innerHTML = '';
+            guideText.innerHTML = '<p style="color: blue;">입력란이 비어있습니다.</p>';
+            guideText.style.display = 'block';
+            return;
+        }
+        
+        try {
+            qrcode.clear();
+            qrcode.makeCode(text); 
+            guideText.style.display = 'none'; 
+        } catch (error) {
+			qrcode.clear();
+			outputDiv.innerHTML = '';
+            outputDiv.innerHTML = '<p style="color: red;">오류가 발생했습니다.</p>';
+            guideText.style.display = 'none';
+        }
+    }
+
+
+    generateButton.addEventListener('click', makeCode);
+</script>
