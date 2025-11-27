@@ -1,0 +1,22 @@
+---
+layout: post
+title: MAP와 L2 regularization
+date: 2025-07-02
+category: Probabilistic-Modelling
+use_math: true
+---
+
+# Regularization이란 무엇인가?
+- 참조: [Why is the L2 regularization equivalent to Gaussian prior?](https://stats.stackexchange.com/questions/163388/why-is-the-l2-regularization-equivalent-to-gaussian-prior)
+- 나의 궁금증도 여기서 출발 (통계잘알들은 딱 보면 이해하겠지만 나는 확통 과목 5번 듣고도 베이즈 정리를 못 외우는 이해능력 이슈로 직관적인 이해가 안 되었음...)
+
+## 1. L1 Norm과 L2 Norm
+
+
+## 2. 분포가 Normal distribution일 때의 MAP
+
+
+## 3. 그래서 뭔 상관??
+
+
+## 4. 확률과 확률밀도의 차이
