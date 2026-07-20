@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 차원 축소: PCA, ICA, CCA, 그리고 LDA
+title: 차원 축소 - PCA, ICA, CCA, 그리고 LDA
 date: 2026-06-06
 category: Probabilistic-Modelling
 use_math: true
