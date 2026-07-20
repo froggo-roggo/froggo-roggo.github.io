@@ -55,6 +55,7 @@ use_math: true
     - $$\lambda = \frac{1}{2 \sigma^2}$$로 두면 Ridge regression의 식처럼 패널티를 주는 형태가 된다.
         - $$\underset{\theta}{\mathrm{argmax}} \,\, \left[ \log P(D|\theta) - \lambda \lVert \theta \rVert_2^2 \right]$$
     - 즉, 사후분포를 최대화하는 것은 파라미터의 L2 norm에 비례하는 패널티를 주면서 likelihood를 최대화하는 것과 동일하다. 또는 즉, 파라미터가 원점(평균)에서 멀어질수록 더 큰 패널티를 부여하는 형태가 된다. 이때 최댓값이 목적이므로 패널티가 음수 방향이라고 이해하면 편함
+		- 구현하면서 헷갈렸던 부분이 생각났는데, Loss로 **negative log likelihood (NLL)**를 쓰고 있다면 이건 최소화 문제가 된다. 그러면 $$\underset{\theta}{\mathrm{argmin}} \,\, \left[ - \log P(D|\theta) + \lambda \lVert \theta \rVert_2^2 \right]$$ 가 될 수도 있다. 이 부호가 더럽게 헷갈렸는데 패널티라는걸 기억하면서 짜면 좀 덜 헷갈릴듯 (P<1이므로 NLL>0이라서 더 헷갈리는듯...)
     - 여기서 표준정규분포를 가정하고 있으므로, $$\mu=0$$이다. 만약 $$\mu \ne 0$$라면 패널티는 간단하게 $$-\frac{(\theta-\mu)^2}{2\sigma^2}$$이다.
 - 한편 LASSO regression과 동일한 패널티를 쓰게 되는 분포도 있다. Laplace 분포 $$f(x) = \frac{1}{2b} \, e^{\frac{- \left\vert x - \mu \right\vert}{b}}$$에 대해 같은 유도 과정을 거치면 LASSO regression 식이 나온다. 딱 봐도 그렇게 생김
 
