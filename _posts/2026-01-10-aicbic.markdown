@@ -1,0 +1,12 @@
+---
+layout: post
+title: AIC, BIC score와 Bayes Factor
+date: 2026-01-10
+category: Probabilistic-Modelling
+use_math: true
+---
+
+# 정보
+- 언젠간 쓰겄지... 이 개념은 아직 급하진 않다...
+
+## 1. Information Criterion
