@@ -55,7 +55,14 @@ use_math: true
   - 시점 t에서 시스템의 state, 보통 관측할 수 없음: $$x_t$$ 
   - 시점 t에서 state x에 있는 시스템이 출력하는 output, 관측 가능함: $$z_t$$
 - 그리고 $$u_{t-1}$$ → $$z_{t-1}$$ → $$u_{t}$$ → $$z_{t}$$ → ... 의 input과 observation이 반복될 때, 시스템의 state에 대한 분포 및 그에 대한 belief는 다음과 같이 변한다.
-  - (이 부분 틀리게 쓴 것 발견하여 나중에 고칠 예정)
+  - 먼저 이전 시점의 belief와 state transition model을 이용하여 현재 시점의 state를 예측한다. 이 단계에서는 아직 새로운 observation을 사용하지 않으며, 현재 state에 대한 **prior belief**를 계산한다. 이를 **예측 단계(Prediction step)**라고 한다.
+    - 이 단계의 belief $$\overline{bel}(x_t) = \int p(x_t \mid u_t, x_{t-1})\, bel(x_{t-1})\, dx_{t-1}$$
+  - 이후 현재 시점의 observation $$z_t$$가 주어지면, observation model을 이용하여 prior belief를 보정한다. 즉, 예측한 state와 실제 observation이 얼마나 잘 일치하는지를 반영하여 **posterior belief**를 계산한다. 이를 **보정 단계(Update step)**이라고 한다. 
+    - 이 단계의 belief $$bel(x_t) = \frac{p(z_t \mid x_t) \overline{bel}(x_t)}{\int p(z_t \mid x_t) \overline{bel}(x_t) dx_t}$$
+	- 여기서, 분모는 너무 길고 중복되기 때문에 $$\eta = \frac{1}{\int p(z_t \mid x_t) \overline{bel}(x_t) dx_t}$$로 두고 $$bel(x_t) = \eta \, p(z_t \mid x_t) \, \overline{bel} (x_t)$$라고 쓰기도 한다.
+	- Update step은 Correction step이라고 할 때도 있음
+    - 이렇게 계산된 posterior belief는 다음 시점의 prediction에서 다시 prior belief를 계산하는 데 사용된다.
+  - 따라서 베이즈 필터는 **Prediction → Update → Prediction → Update**의 과정을 반복하며 시스템의 state를 순차적으로 추정한다.
 
 ## 2. Kalman Filter
 - Kalman filter는 위 과정에서 쓰이는 확률 분포가 Gaussian인 경우를 의미한다.
@@ -122,7 +129,10 @@ use_math: true
   - 확률 분포를 이용한 베이지안 필터에서 모델의 state에 대한 믿음 $$bel(x_t)$$는 확률 분포로 나타난다.
     - "확률 분포로 나타난다"는 것은 이 state variable을 확률 분포에 대한 hyperparameter (예를 들어 가우시안 분포의 경우 평균과 표준편차)로 나타낼 수 있다는 뜻이다.
 	- 가령 어떤 모델의 state variable이 "위치"일 경우, 1D Gaussian $$bel(x_t)$$는 예상되는 위치를 mean으로 하고 그 주변 반경 $$\sigma$$만큼을 표준편차로 하는 원형 공간으로 나타날 것이다.
-  - 반면 particle filter에서는 
+  - 반면 particle filter에서는 이 확률분포를 파라미터 대신, 수많은 입자(particle)들의 밀도로 표현한다.
+	- 그러니까 파라미터로 나타낼 수 없는 것들도 나타낼 수 있게 된다. 샘플링하면 되니까...
+	- 각 입자들은 단순히 위치 정보만 갖는 것이 아니라, 현재 관측값($$z_t$$)과 얼마나 일치하는지를 나타내는 가중치를 부여받는다. 모델의 예측과 실제 데이터가 잘 맞아떨어지는 입자일수록 가중치가 높다.
+	- 시간이 지날수록 가중치가 높은 입자들은 계속 resample되고, 가중치가 낮은 입자들은 점차 사라진다. 기본 골자는 Kalman Filter와 똑같음! 비정형 분포, 비선형 분포에서도 폭넓게 적용할 수 있다는 장점이 있음.
   
 ## 4. 논문 읽음
 - 읽으려 한 논문 1: [Kim, Lee, Forger (2023)](https://arxiv.org/abs/2207.09406)
