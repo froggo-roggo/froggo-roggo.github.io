@@ -48,7 +48,7 @@ use_math: true
     - 그러면 Prior의 pdf는 $$P(\theta) = \frac{1}{\sqrt{2 \pi \sigma^2}} \, e^{-\frac{\theta^2}{2\sigma^2}}$$
 	- 양변에 log를 취하면 $$log P(\theta) = -\frac{1}{2}\, log(2 \pi \sigma^2) - \frac{\theta^2}{2\sigma^2}$$
 	- 이때 첫번째 항은 상수 취급 가능하다. 따라서 $$log P(\theta) \propto - \frac{\theta^2}{2\sigma^2}$$
-	- 따라서 정규분포의 MAP 문제는 $$\underset{\theta}{\mathrm{argmax}} \,\, \left[ \log P(D|\theta) - \frac{\theta^2}{2\sigma^2} \right]$$ 문제가 된다.
+	- 따라서 정규분포의 MAP 문제는 $$\underset{\theta}{\mathrm{argmax}} \,\, \left[ \log P(D \mid \theta) - \frac{\theta^2}{2\sigma^2} \right]$$ 문제가 된다.
 
 ## 4. 그래서 뭔 상관??
 - 마지막 식 어디서 많이 보지 않았는지??
