@@ -9,14 +9,68 @@ use_math: true
 # Regularization이란 무엇인가?
 - 참조: [Why is the L2 regularization equivalent to Gaussian prior?](https://stats.stackexchange.com/questions/163388/why-is-the-l2-regularization-equivalent-to-gaussian-prior)
 - 나의 궁금증도 여기서 출발 (통계잘알들은 딱 보면 이해하겠지만 나는 확통 과목 5번 듣고도 베이즈 정리를 못 외우는 이해능력 이슈로 직관적인 이해가 안 되었음...)
+- 우선 가장 먼저, **정규화(regularization)**은 **가중치에 제약을 걸겠다**는 뜻이다.
+	- 단어 혼동 금지!! **정규화(normalization)**과는 한국어 단어가 같은데 뜻이 다르다. 하필 하는 짓도 비슷해서 더 혼동하기 쉽다.
+		- Normalization은 입력 데이터를 일정 범위 내로 조정하는 것
+		- Regularization은 가중치를 일정 범위 내로 조정하는 것
+- Optimization에서는 왜 가중치에 제약을 걸어야 할까?
+	- 가장 큰 이유는 **overfitting을 방지**하기 위해서이다. 데이터가 noisy할 때, 특히 outlier가 너무 많을 때 데이터를 곧이곧대로 받아들이면, 모델이 터무니없이 복잡해질 수 있다.
+		- 모르는 뭔가를 맞추고자 할 때는, 예측값의 편향(bias, 진짜 정답으로부터의 거리)과 분산(variance, 얼마나 퍼져있는지)이 둘 다 작으면 좋다.
+		- 그러나 보통 둘 사이에는 trade-off가 존재한다. 즉 둘 다 만족할 수는 없다.
+		- 데이터가 noisy하고 여기에 모델이 overfitting 되어있으면, 모델 예측값의 variance도 커진다.
+	- 이 때, 각 가중치의 크기가 일정 범위를 넘어가지 않도록 정규화하면 학습의 과적합을 방지할 수 있고, outlier가 많이 생기더라도 안정성을 높일 수 있다.
+		- Bias는 좀 생기겠지만, variance를 줄여서 **일반화(generalization)** 성능을 높이려는 것이다.
+- 그런데 그 '가중치의 크기'를 어떻게 측정하고, '일정 범위'는 어떻게 정할 것인가? 이걸 알려면 우선 벡터의 길이를 측정하는 방법부터 알아야 할 것이다.
 
 ## 1. L1 Norm과 L2 Norm
+- Norm: 다양한 차원에서 정의되는 벡터의 길이를 의미한다. Cartesian 좌표계에서 가장 보편적으로 쓰이는건 $$x^2 + y^2$$ 인데, 후술하겠지만 이것이 바로 2차원 벡터에 대한 L2 Norm.
+- L1 norm은 Manhattan norm이라고도 한다. '택시 거리'라는 단어도 익숙할 것이다. 2차원 좌표계로 한정하자면, '가로로 간 거리'와 '세로로 간 거리'를 그대로 더해 구하는 값이라고 보면 된다.
+    - n차원 벡터에 대해 일반화하자면, 벡터 $$\mathbf{x}=[x_1, x_2, ... x_n]$$에 대해 $$\lVert \mathbf{x} \rVert_1 = \sum\limits_{i=1}^{n} \left\vert x_i \right\vert$$
+- L2 norm은 Euclidian norm이다. (내 기준) 가장 자주 쓰는 norm이기도 하다.
+    - n차원 벡터에 대해 일반화하면, $$\lVert \mathbf{x} \rVert_2 = \sqrt{\sum\limits_{i=1}^{n} x_i^2}$$
+- 같은 원리로, L\_p norm을 일반화할 수도 있다.
+	- $$\lVert \mathbf{x} \rVert_p = (\sum\limits_{i=1}^{n} x_i^p)^{\frac{1}{p}}$$
 
+## 2. LASSO와 Ridge regularization
+- Linear regression을 예시로 들어보자. 여기서의 가중치는 coefficient $$\mathbf{\beta} = (\beta_1, ... , \beta_p)$$라고 볼 수 있다.
+	- 최적화 문제로 되풀이하면, $$\hat{\mathbf{\beta}} = \underset{\mathbf{\beta}}{\mathrm{argmin}} \left[ \sum^{n}_{i=1} (\mathbf{y_i} - \mathbf{x_i} \beta)^2 \right]$$ 처럼 MSE를 최소화하는 과정이 된다.
+	- 여기에 패널티를 준다는 것은, argmin 항 내부에 가중치의 norm을 일정 비율 더해준다는 뜻이다.
+- LASSO regularization은 L1 norm으로 진행하는 regularization이다. 가중치의 범위를 L1 Norm으로 재서 제한한다.
+	- $$\hat{\beta} = \underset{\mathbf{\beta}}{\mathrm{argmin}} \left[ \sum^{n}_{i=1} (\mathbf{y_i} - \mathbf{x_i} \beta)^2 + \lambda \sum^{p}_{j=1} \left\vert\beta_{j}\right\vert \right]$$
+- Ridge regularization은 L2 norm으로 진행하는 regularization이다. 가중치의 범위를 L2 Norm으로 재서 제한한다.
+	- $$\hat{\beta} = \underset{\mathbf{\beta}}{\mathrm{argmin}} \left[ \sum^{n}_{i=1} (\mathbf{y_i} - \mathbf{x_i} \beta)^2 + \lambda \sum^{p}_{j=1} \beta_{j}^2 \right]$$
 
-## 2. 분포가 Normal distribution일 때의 MAP
+## 3. 분포가 Normal distribution일 때의 MAP
+- [앞 글](/probabilistic-modelling/2024/05/03/svi.html)에서도 보았듯 MAP는 주어진 데이터 $$D$$에 대한 파라미터 $$\theta$$의 사후 추정치 $$P(\theta \mid D)$$를 최대화하는 추정 방법이다.
+    - 참고로, 앞 글에서는 파라미터 $$\theta$$ 대신 가설 h라는 notation을 썼다. 여기서는 좀 더 직접적으로 "계산"해야 할 대상임을 강조하기 위해 $$\theta$$로 대신하고자 한다.
+    - 베이즈 정리에 따라, $$P(D, h')$$가 주어졌을 때 $$P(\theta \mid D) \propto P(D \mid \theta)P(\theta)$$ 이므로 log를 취하면 $$\underset{\theta}{\mathrm{argmax}} \,\, log P(D \mid \theta) + log P(\theta)$$를 구하는 문제와 같다.
+- 이제 prior가 표준정규분포를 따른다고 가정해보자. 즉, $$\theta \sim N(0, \sigma^2)$$ 이다.
+    - 그러면 Prior의 pdf는 $$P(\theta) = \frac{1}{\sqrt{2 \pi \sigma^2}} \, e^{-\frac{\theta^2}{2\sigma^2}}$$
+	- 양변에 log를 취하면 $$log P(\theta) = -\frac{1}{2}\, log(2 \pi \sigma^2) - \frac{\theta^2}{2\sigma^2}$$
+	- 이때 첫번째 항은 상수 취급 가능하다. 따라서 $$log P(\theta) \propto - \frac{\theta^2}{2\sigma^2}$$
+	- 따라서 정규분포의 MAP 문제는 $$\underset{\theta}{\mathrm{argmax}} \,\, \left[ \log P(D|\theta) - \frac{\theta^2}{2\sigma^2} \right]$$ 문제가 된다.
 
+## 4. 그래서 뭔 상관??
+- 마지막 식 어디서 많이 보지 않았는지??
+    - $$\lambda = \frac{1}{2 \sigma^2}$$로 두면 Ridge regression의 식처럼 패널티를 주는 형태가 된다.
+        - $$\underset{\theta}{\mathrm{argmax}} \,\, \left[ \log P(D|\theta) - \lambda \lVert \theta \rVert_2^2 \right]$$
+    - 즉, 사후분포를 최대화하는 것은 파라미터의 L2 norm에 비례하는 패널티를 주면서 likelihood를 최대화하는 것과 동일하다. 또는 즉, 파라미터가 원점(평균)에서 멀어질수록 더 큰 패널티를 부여하는 형태가 된다. 이때 최댓값이 목적이므로 패널티가 음수 방향이라고 이해하면 편함
+    - 여기서 표준정규분포를 가정하고 있으므로, $$\mu=0$$이다. 만약 $$\mu \ne 0$$라면 패널티는 간단하게 $$-\frac{(\theta-\mu)^2}{2\sigma^2}$$이다.
+- 한편 LASSO regression과 동일한 패널티를 쓰게 되는 분포도 있다. Laplace 분포 $$f(x) = \frac{1}{2b} \, e^{\frac{- \left\vert x - \mu \right\vert}{b}}$$에 대해 같은 유도 과정을 거치면 LASSO regression 식이 나온다. 딱 봐도 그렇게 생김
 
-## 3. 그래서 뭔 상관??
+## 5. 확률과 확률밀도의 차이
+- 확률은 어떤 사건이 일어날 가능성으로서, 늘 $$P(A) \in [0, 1]$$ 을 만족한다.
+- 확률밀도(Probability Density)는 연속확률변수에서 정의되는 개념이다. 한 점만 찝으면 확률은 늘 0이다.
+	- 확률밀도함수(PDF)의 확률이 의미있어지는건 특정 구간에 대해 적분했을 때 뿐이다. 아무리 작은 범위라도...
+	- pdf를 (변수가 정의되는) 전체 구간에 대해 적분하면 반드시 1이 된다.
+	- 그러나 pdf는 확률 그 자체가 아니라, "확률이 얼마나 조밀하게 모여 있는지"를 나타내는 함수이다. 따라서 pdf의 값 자체는 1보다 커질 수도 있으며, 중요한 것은 함수의 넓이가 1이라는 점이다.
+- 한편 확률질량(Probaiblity Mass)는 이산확률변수에서 정의되는 개념이다. 한 점에 대해 확률이 존재한다.
+	- 자연스럽게 단위도 달라진다. 확률과 확률질량함수(pmf)는 차원이 없지만, pdf의 차원은 변수의 차원의 역수가 된다.
+		- 그니까 x축이 cm 단위면, pmf의 단위는 cm^{-1}가 된다는 뜻...
+	- pdf를 pmf로 바꾸고 싶으면, 연속 범위를 이산적으로 binning한 다음 각 구간별로 적분하면 pmf가 된다.
+- 사실, 연속변수를 다루더라도 실제 계산에서는 적분을 직접 수행하기 어렵기 때문에, 정의역을 discretization 또는 binning하여 pmf처럼 근사하여 계산하는 경우가 많다.
+	- 자신이 pdf를 그리고 있는지 pmf를 그리고 있는지 헷갈리지 않도록 하자. pdf의 vector x[n]이 있다고 할 때 단순히 x[0]부터 x[n-1]까지 다 더한다고 1이 나오는게 아니다. x의 구간 폭이 어떻게 되는지 확인하고 그걸 곱해줘야 한다.
+- 뭐가 됐든 **본인 코드에서 새로운 확률 관련 함수를 정의하고 있다면, 반드시 모든 구간에 대해 더했을 때 1이 되는지 확인해야 한다!**
+	- 다른 말로는 normalization이 잘 됐는지 확인해야 한다는 뜻이다. 글 쓰다보니 앞에 regularization이랑 normalization 떡밥 회수 성공;;
+	- pdf는 적분하면 1, pmf는 더하면 1이다.
 
-
-## 4. 확률과 확률밀도의 차이
