@@ -190,5 +190,5 @@ use_math: true
 		- 나중에 검색 안 하려고 써놓음
 	- 그 다음은 원하는 유의수준 $$\alpha$$와 검정력 $$1-\beta$$를 설정한다. 보통 각각 0.05와 0.8을 가장 많이 쓴다.
 	- 대립가설의 방향도 결정한다. 양쪽인지, 왼쪽 단측(유의하게 작다)인지, 오른쪽 단측(유의하게 크다)인지...
-	- ```statsmodels.stats.power.TTestPower.solve_power(effect_size, alpha, power, alternative))``` 에 집어넣으면 됨
+	- 최종적으로 ```statsmodels.stats.power.TTestPower.solve_power(effect_size, alpha, power, alternative))``` 에 집어넣으면 조건을 만족하는 최소 sample 수를 역산해줌
 	    - 여기서 ```alternative``` 가 대립가설 방향임
