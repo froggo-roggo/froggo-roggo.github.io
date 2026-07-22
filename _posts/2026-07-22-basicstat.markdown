@@ -38,7 +38,7 @@ use_math: true
 - 근데 가끔 모집단이 들어가야 할 자리에 모수를 쓰는 경우가 있음... '모집단의 원소(element) 수'로 착각하는듯. '모집단의 특성 수치'를 줄여서 모수임
 
 ### 3-1. Maximum likelihood estimation (MLE)
-- 전체적으로는 [예전 글](링크)을 참조
+- 전체적으로는 [예전 글](/probabilistic-modelling/2024/05/03/svi.html)을 참조
 - 주의할 점: Estimator와 Estimate은 다른 개념
     - Estimator: 그냥 random variable. 추정자.
 	- Estimate: Random variable을 sample하면 나오는 data. 추정치.
