@@ -80,7 +80,7 @@ use_math: true
 - point estimator $$d := d(\mathbf{X})$$가 $$\theta$$의 estimator로 충분한지 평가하려면 어떻게 하면 좋을까?
     - 평균제곱오차(Mean square error) $$r(d, \theta) := E \left[ (d(\mathbf{X}) - \theta)^2 \right]$$
 	    - 당연하지만 작을수록 좋음
-	- 편향(Bias) $$b_{\theta}(d) := E \left[ d(\mathbf{X} - \theta \right]$$
+	- 편향(Bias) $$b_{\theta}(d) := E \left[ d(\mathbf{X}) - \theta \right]$$
 	    - 만약 모든 parameter $$\theta$$에 대해 이 값이 0이면, d를 unbiased estimator라고 한다.
     - 분산에 대한 식을 응용해서 일반화하면, $$r(d, \theta) = Var(d) + (b_{\theta}(d))^2$$ 임을 알 수 있다.
 
