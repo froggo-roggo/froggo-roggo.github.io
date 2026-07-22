@@ -43,7 +43,7 @@ use_math: true
   - 이처럼 현 시점의 관측값을 곧이곧대로 "믿지 못하는" 경우는 생각보다 자주 발생하기 때문에, 이미 **관측된 데이터임에도 다시금 추정**을 해야 하는 상황이 발생할 수 있다.
     - 그리고 위에서도 언급했듯 <u>어떤 데이터에 노이즈가 끼어있다는 확신(거꾸로 말하자면 새로 얻은 데이터에 대한 낮은 belief)은 이전까지의 정보를 통해서 얻어지기 때문에 베이즈 추론과 관련이 있는 것</u>이다.
 	- (다만 모든 필터가 베이즈 추론을 사용하는 것은 아니다. 예를 들면 이미지나 음성에 적당한 커널을 일괄적으로 곱해서 처리하는 것은 필터링은 맞지만 베이지안은 아닐 수 있다.)
-- 참고로, filtering 이외에도 관측 데이터에 대해서 [다양한 추정 문제](https://alida.tistory.com/54)가 존재한다. (Smoothing, prediction, interpolation 등)
+- 참고로, filtering 이외에도 관측 데이터에 대해서 다양한 추정 문제가 존재한다. (Smoothing, prediction, interpolation 등)
   - 어차피 다 나중에 알아야 할 것들이라서 메모해둠,,,
 
 ### 1.3. 그럼 베이지안 필터란 정확히 무엇인가?
@@ -63,6 +63,8 @@ use_math: true
 	- Update step은 Correction step이라고 할 때도 있음
     - 이렇게 계산된 posterior belief는 다음 시점의 prediction에서 다시 prior belief를 계산하는 데 사용된다.
   - 따라서 베이즈 필터는 **Prediction → Update → Prediction → Update**의 과정을 반복하며 시스템의 state를 순차적으로 추정한다.
+
+<center><img src="/assets/img/kalmanfilter_2.png" style="width:auto;height:auto;max-height:400px"/></center>
 
 ## 2. Kalman Filter
 - Kalman filter는 위 과정에서 쓰이는 확률 분포가 Gaussian인 경우를 의미한다.
