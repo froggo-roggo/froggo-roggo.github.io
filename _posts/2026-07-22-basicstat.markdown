@@ -92,6 +92,8 @@ use_math: true
 - 영가설, 귀무가설 (Null hypothesis) $$H_0$$: 아무런 차이가 없다는 가설. 실험이나 데이터를 통해 기각하고 싶은 가설.
 - 대립가설 (Alternative hypothesis) $$H_1$$: 차이가 있다는 가설. 실험이나 데이터를 통해 증명하고 싶은 가설.
 - 기각역 (Critical region): 확률변수 $$X_i$$의 값이 $$C$$에 포함될 경우, 귀무가설을 기각하는 범위 $$C$$. 달리 말해, 데이터가 $$C$$ 구간에서 나타나면 대립가설이 채택되고 연구 성공!
+- 유의수준 (Significance level) $$\alpha$$: 귀무가설 $$H_0$$를 기각하는 기준. $$\alpha=0.05$$와 같은 숫자를 많이 본 적 있을 것이다. 아주 거칠게 요약하면 "이게 $$H_0$$가 참인 상황에서 우연히 나온 결과일 확률은 5%" 라는 뜻. 모든 통계적 판단의 기준이 된다.
+- 검정력 (Power) $$\beta$$: 대립가설 $$H_1$$이 참일 때 $$H_0$$을 기각할 확률. $$1-\beta=80%$$와 같이 쓰는 경우를 본 적 있을 것이다. 달리 말하면 "실제로 유의한 차이가 존재할 때, 그 차이를 찾아낼 확률"을 의미한다. 통상적으로 0.8~0.9 이상은 갖추어야 신뢰할 수 있다고 판단한다.
 
 ### 4-1. 평균의 검정 (z 검정, t 검정)
 - 위 파트 3-3을 참고해보자.
@@ -131,3 +133,62 @@ use_math: true
 - 하나의 Poisson parameter
 - 두 집단의 Poisson parameter: Bernoulli 분포를 쓴다.
 - (TODO)
+
+### 4-4. Type 1 error, Type 2 error와 correction
+- 가설검정에서는 언제나 잘못된 결정을 내릴 가능성이 존재한다.
+- 크게 두 가지 종류의 오류가 있다.
+
+| 실제 상황 | $$H_0$$를 기각하지 않음 | $$H_0$$를 기각 |
+|-----------|-----------------------|---------------|
+| $$H_0$$가 참 | 맞는 판단 | **Type I error (False Positive)** |
+| $$H_0$$가 거짓 | **Type II error (False Negative)** | 맞는 판단 |
+
+- **Type I error (제1종 오류)**: 실제로 차이가 없는데도 차이가 있다고 결론 내리는 오류 (False Positive)
+    - 발생 확률이 $$\alpha$$, 즉 유의수준이다.
+- **Type II error (제2종 오류)**: 실제로 차이가 있는데도 차이가 없다고 결론 내리는 오류 (False Negative)
+    - 발생 확률은 $$\beta$$, 즉 1-(검정력)이다.
+- 일반적으로 $$\alpha$$를 지나치게 작게 설정하면 Type I error는 줄어들지만, Type II error는 증가하는 경향이 있다.
+
+#### Multiple comparison problem
+- 하나의 가설만 검정한다면 문제가 크지 않지만, 수십~수천 개의 가설을 동시에 검정하면 우연히 유의한 결과가 나올 가능성이 커진다.
+    - 예를 들어 유의수준 $$\alpha=0.05$$에서 독립적인 가설을 100개 검정하면, 평균적으로 약 5개는 우연히 유의한 결과가 나올 것으로 기대된다.
+- 따라서 다중 비교(Multiple comparison)를 수행할 때는 p-value를 보정(correction)하는 과정이 필요하다.
+
+#### 대표적인 correction 방법
+- **Bonferroni correction**
+    - Family-wise Error Rate(FWER)를 제어하는 가장 간단한 방법.
+    - 검정 개수를 $$m$$이라 할 때, 새로운 유의수준을 $$\frac{\alpha}{m}$$으로 설정한다.
+    - 매우 보수적(conservative)이어서 False Positive를 강하게 억제하지만 검정력이 감소할 수 있다.
+	    - 즉 실제로 유의한 차이가 있었는데도 차이가 없다고 해버리는, Type 2 Error가 발생할 확률이 높아진다는 뜻이다.
+- **Holm-Bonferroni correction**
+    - Bonferroni를 개선한 방법.
+    - p-value를 작은 순서대로 정렬한 후, 1부터 $$m$$까지 rank를 부여한다.
+	    - 이후 각 rank $$i$$에서 p-value $$p_{(i)}$$의 새로운 threshold는 $$\frac{\alpha}{m+1-i}$$ 와 비교한다.
+		- 작은 p-value부터 점차 완화된 기준을 적용한다고 보면 된다.
+    - FWER를 제어하면서도 Bonferroni보다 검정력이 높다.
+- **Benjamini-Hochberg (BH) correction**
+    - False Discovery Rate(FDR)를 제어하는 방법.
+    - 모든 False Positive를 막기보다는, 유의하다고 판단한 결과 중 False Positive의 비율을 제한한다.
+	    - 마찬가지로 각 p-value를 오름차순으로 정렬하고, 1부터 $$m$$까지 rank를 부여한다.
+		- 이후 $$p_{(i)} \le \frac{i}{m} \alpha$$를 만족하는 가장 큰 rank $$i$$를 찾는다.
+		- $$i$$보다 rank가 작은 모든 p-value를 유의하다고 판단한다.
+		- 과정은 다르지만, 결과적으로 rank에 따라 허용되는 p-value의 threshold가 $$\frac{\alpha * i}{m}$$로 설정된다.
+    - 유전자 분석, 뇌영상 분석 등 수백~수만 개의 가설을 동시에 검정하는 분야에서 가장 널리 사용된다.
+- 어떤 correction을 사용할지는 연구 목적에 따라 다르다.
+    - False Positive를 최대한 피해야 하는 경우에는 Bonferroni 또는 Holm-Bonferroni를 사용한다.
+    - 많은 후보 중 의미 있는 결과를 찾는 것이 목적이라면 BH(FDR)가 더 적합한 경우가 많다.
+	
+### 4-번외. p value와 sample size로부터, effect size 및 최소 샘플 수 구하기
+- 논문에는 종종 평균과 표준편차 대신 p-value와 sample size만 제시되는 경우가 있다.
+- 이 경우 검정통계량(t, z, F 등)을 역산한 뒤, effect size(Cohen's d 등)를 추정할 수 있다.
+- 추정한 effect size를 이용하면 원하는 유의수준 $$\alpha$$와 검정력(Power = $$1-\beta$$)에서 필요한 최소 sample size도 계산할 수 있다.
+- 예를 들어, t-test에서는
+    - 먼저 $$n$$이 있으면 자유도 $$df=n-1$$도 알게 되므로, p를 t로 바꿀 수 있다. $$t=t^{-1}(\frac{1p}{2}, df)
+	- $$t$$와 $$n$$을 알고 있으면, Cohen's $$d$$는 $$d = \frac{t}{\sqrt{n}}$$으로 구할 수 있다.
+	    - 독립표본, 즉 2 sample이어서 $$n_1$$과 $$n_2$$가 있을 떈, $$df = n_1+n_2-2$$고 $$d = t \sqrt{\frac{1}{n_1}+\frac{1}{n_2}}$$ 이다.
+		- 아유 복잡해
+		- 나중에 검색 안 하려고 써놓음
+	- 그 다음은 원하는 유의수준 $$\alpha$$와 검정력 $$1-\beta$$를 설정한다. 보통 각각 0.05와 0.8을 가장 많이 쓴다.
+	- 대립가설의 방향도 결정한다. 양쪽인지, 왼쪽 단측(유의하게 작다)인지, 오른쪽 단측(유의하게 크다)인지...
+	- ```statsmodels.stats.power.TTestPower.solve_power(effect_size, alpha, power, alternative))``` 에 집어넣으면 됨
+	    - 여기서 ```alternative``` 가 대립가설 방향임
