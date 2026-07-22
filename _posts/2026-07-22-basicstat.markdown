@@ -40,14 +40,14 @@ use_math: true
 ### 3-1. Maximum likelihood estimation (MLE)
 - 전체적으로는 [예전 글](/probabilistic-modelling/2024/05/03/svi.html)을 참조
 - 주의할 점: Estimator와 Estimate은 다른 개념
-    - Estimator: 그냥 random variable. 추정자.
-	- Estimate: Random variable을 sample하면 나오는 data. 추정치.
+    - Estimator: 데이터를 입력받아 parameter를 추정하는 statistic(함수). 추정자.
+	- Estimate: 그 estimator에 실제 데이터를 넣어서 얻은 값. 추정치.
 - 어떤 확률변수 $$X_i$$에 대한 데이터 $$(x_1, x_2, ... , x_n)$$이 주어졌을 때, 확률변수 $$X_i$$의 분포 종류 $$f$$를 알고 있다면(또는 가정했다면), $$f$$의 매개변수 $$\theta$$를 알아내는 과정이 바로 MLE
     - 이때 $$f(x_1, x_2, ..., x_n \mid \theta) = f_{X_1}(x_1) * f_{X_2}(x_2) * ... * f_{X_n}(x_n)$$
 		- 모든 양의 정수 i에 대해 X_i가 서로 독립이라 가정하기 때문에 우변처럼 표현 가능
-		- independent and identically distributed (i.i.d.)
+		- 일반적으로 iid(independent and identically distributed)를 가정
 	- 여기서 MLE: 이 독립사건들의 확률곱을 최대화하는 $$\theta$$의 값 또는 식
-		- 값을 구하면 점추정(Point estimation), 범위를 구하면 구간추정(Interval estimation)
+	- 참고로 MLE는 기본적으로 점추정 (Point esimation) 방법임
 
 ### 3-2. 다양한 분포들의 estimator
 - Bernoulli
@@ -93,17 +93,17 @@ use_math: true
 - 대립가설 (Alternative hypothesis) $$H_1$$: 차이가 있다는 가설. 실험이나 데이터를 통해 증명하고 싶은 가설.
 - 기각역 (Critical region): 확률변수 $$X_i$$의 값이 $$C$$에 포함될 경우, 귀무가설을 기각하는 범위 $$C$$. 달리 말해, 데이터가 $$C$$ 구간에서 나타나면 대립가설이 채택되고 연구 성공!
 - 유의수준 (Significance level) $$\alpha$$: 귀무가설 $$H_0$$를 기각하는 기준. $$\alpha=0.05$$와 같은 숫자를 많이 본 적 있을 것이다. 아주 거칠게 요약하면 "이게 $$H_0$$가 참인 상황에서 우연히 나온 결과일 확률은 5%" 라는 뜻. 모든 통계적 판단의 기준이 된다.
-- 검정력 (Power) $$\beta$$: 대립가설 $$H_1$$이 참일 때 $$H_0$$을 기각할 확률. $$1-\beta=80%$$와 같이 쓰는 경우를 본 적 있을 것이다. 달리 말하면 "실제로 유의한 차이가 존재할 때, 그 차이를 찾아낼 확률"을 의미한다. 통상적으로 0.8~0.9 이상은 갖추어야 신뢰할 수 있다고 판단한다.
+- 검정력 (Power) $$1 - \beta$$: 대립가설 $$H_1$$이 참일 때 $$H_0$$을 기각할 확률. $$1-\beta=80%$$와 같이 쓰는 경우를 본 적 있을 것이다. 달리 말하면 "실제로 유의한 차이가 존재할 때, 그 차이를 찾아낼 확률"을 의미한다. 통상적으로 0.8~0.9 이상은 갖추어야 신뢰할 수 있다고 판단한다.
 
 ### 4-1. 평균의 검정 (z 검정, t 검정)
 - 위 파트 3-3을 참고해보자.
 - **모분산을 알고 있다면, 정규분포를 사용하면 된다**. 이를 **z 검정(z-test)**라고 한다.
     - 모분산을 알고 있으면, 표본분산을 추정 안 해도 되니까 자유도가 줄어들지 않는다.
     - 추정할 평균 $$\mu$$, 추정치 $$\overline{X}$$, 기준 평균 $$\mu_0$$라 하자.
-	- 검정해야 할 식은 $$ \frac{\overline{X}-\mu_0}{\frac{\sigma}{\sqrt{n}}} \sim Z_0 $$
+	- 검정해야 할 식은 $$Z = \frac{\overline{X}-\mu_0}{\frac{\sigma}{\sqrt{n}}}$$
     - $$H_0$$: $$\mu = \mu_0$$ (별 차이가 없을 것이다)
 	- $$H_1$$: $$\mu \ne \mu_0$$ (유의한 차이가 있을 것이다)
-	- $$ \lVert Z_0 \rVert = \lVert \frac{\overline{X}-\mu_0}{\frac{\sigma}{\sqrt{n}}} \rVert > Z_{\frac{\alpha}{2}}$$일 경우 $$H_0$$를 기각한다.
+	- $$\lVert Z_0 \rVert = \lVert \frac{\overline{X}-\mu_0}{\frac{\sigma}{\sqrt{n}}} \rVert > Z_{\frac{\alpha}{2}}$$일 경우 $$H_0$$를 기각한다.
 	    - 왜 $$Z_{\frac{\alpha}{2}}$$인가? 양쪽 꼬리(유의하게 큰 경우와 유의하게 작은 경우)를 모두 합쳐서 $$\alpha$$가 되어야 하기 때문
 - 단측 검정을 하려면, 반쪽 분포를 사용한다.
     - $$H_0$$: $$\mu = \mu_0$$ (별 차이가 없을 것이다)
@@ -113,7 +113,7 @@ use_math: true
 		- 따라서 단측 검정의 유의 영역은 양측 검정의 유의 영역의 한쪽 꼬리보다 약간 더 넓어지게 된다.
 - **모분산을 모를 때 표본평균의 값을 검정하려 한다면, t분포를 사용해야 한다**. 이를 **t 검정(t-test)**이라고 한다.
     - 모평균도 모분산도 모르면, 표본분산은 표본평균을 추정한 후 그 표본평균을 이용해서 추정해야 한다. 이 과정에서 자유도가 하나 줄어든다.
-	- 식은 $$\frac{\overline{X} - \mu_0}{\frac{s}{\sqrt{n}}} \sim t_{n-1}$$
+	- 식은 $$T = \frac{\overline{X} - \mu_0}{\frac{s}{\sqrt{n}}}$$
 	- 마찬가지로, $$\lVert \frac{\overline{X} - \mu_0}{\frac{s}{\sqrt{n}}} \rVert > t_{\frac{\alpha}{2}, n-1}$$ 면 $$H_0$$를 기각한다.
 - **모분산을 모를 때 두 집단의 표본평균이 유의하게 다른지 검정하려 할 때도, t분포를 사용해야 한다**.
     - 두 집단의 모분산이 같다고 가정하면, **Student's t-test**
@@ -183,12 +183,12 @@ use_math: true
 - 이 경우 검정통계량(t, z, F 등)을 역산한 뒤, effect size(Cohen's d 등)를 추정할 수 있다.
 - 추정한 effect size를 이용하면 원하는 유의수준 $$\alpha$$와 검정력(Power = $$1-\beta$$)에서 필요한 최소 sample size도 계산할 수 있다.
 - 예를 들어, t-test에서는
-    - 먼저 $$n$$이 있으면 자유도 $$df=n-1$$도 알게 되므로, p를 t로 바꿀 수 있다. $$t=t^{-1}(\frac{1p}{2}, df)$$
+    - 먼저 $$n$$이 있으면 자유도 $$df=n-1$$도 알게 되므로, p를 t로 바꿀 수 있다. $$t=t^{-1}(1-\frac{p}{2}, df)$$
 	- $$t$$와 $$n$$을 알고 있으면, Cohen's $$d$$는 $$d = \frac{t}{\sqrt{n}}$$으로 구할 수 있다.
 	    - 독립표본, 즉 2 sample이어서 $$n_1$$과 $$n_2$$가 있을 떈, $$df = n_1+n_2-2$$고 $$d = t \sqrt{\frac{1}{n_1}+\frac{1}{n_2}}$$ 이다.
 		- 아유 복잡해
 		- 나중에 검색 안 하려고 써놓음
 	- 그 다음은 원하는 유의수준 $$\alpha$$와 검정력 $$1-\beta$$를 설정한다. 보통 각각 0.05와 0.8을 가장 많이 쓴다.
 	- 대립가설의 방향도 결정한다. 양쪽인지, 왼쪽 단측(유의하게 작다)인지, 오른쪽 단측(유의하게 크다)인지...
-	- 최종적으로 ```statsmodels.stats.power.TTestPower.solve_power(effect_size, alpha, power, alternative))``` 에 집어넣으면 조건을 만족하는 최소 sample 수를 역산해줌
+	- 최종적으로 ```statsmodels.stats.power.TTestPower.solve_power(effect_size, alpha, power, alternative)``` 에 집어넣으면 조건을 만족하는 최소 sample 수를 역산해줌
 	    - 여기서 ```alternative``` 가 대립가설 방향임
