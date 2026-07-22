@@ -57,7 +57,8 @@ use_math: true
 - Lognormal
 - (TODO)
 
-### 3-3. 모르는 정보가 있을 때의 estimation: Interval estimation
+### 3-3. Interval estimation
+- 모르는 정보가 있을 때의 estimation
 - 데이터가 정규분포를 따를 것이라고 가정하는 경우가 많으므로, 아래 interval estimation의 예시들도 대부분 normal distribution의 variant
 - 모평균은 모르고, 모분산은 알 때 ($$\mu$$ unknown, $$\sigma^2$$ known)
     - 표본평균의 분포는 표준정규분포
@@ -96,7 +97,7 @@ use_math: true
 - **검정력 (Power) $$1 - \beta$$**: 대립가설 $$H_1$$이 참일 때 $$H_0$$을 기각할 확률. $$1-\beta=80%$$와 같이 쓰는 경우를 본 적 있을 것이다. 달리 말하면 "실제로 유의한 차이가 존재할 때, 그 차이를 찾아낼 확률"을 의미한다. 통상적으로 0.8~0.9 이상은 갖추어야 신뢰할 수 있다고 판단한다.
 
 ### 4-1. 평균의 검정 (z 검정, t 검정)
-- 위 파트 3-3을 참고해보자.
+- 위 [파트 3-3](/probabilistic-modelling/2026/07/22/basicstat.html#3-3-interval-estimation)을 참고해보자.
 - **모분산을 알고 있다면, 정규분포를 사용하면 된다**. 이를 **z 검정(z-test)**라고 한다.
     - 모분산을 알고 있으면, 표본분산을 추정 안 해도 되니까 자유도가 줄어들지 않는다.
     - 추정할 평균 $$\mu$$, 추정치 $$\overline{X}$$, 기준 평균 $$\mu_0$$라 하자.
